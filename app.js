@@ -179,27 +179,37 @@
     });
   }
 
+  function activateLayerStack(item) {
+    var layerNum = item.getAttribute('data-layer');
+    var accordionItem = document.getElementById('layer' + layerNum);
+    if (!accordionItem) return;
+
+    var wasOpen = accordionItem.classList.contains('open');
+    document.querySelectorAll('.accordion-item.open').forEach(function (openItem) {
+      openItem.classList.remove('open');
+      var h = openItem.querySelector('.accordion-header');
+      if (h) h.setAttribute('aria-expanded', 'false');
+    });
+
+    if (!wasOpen) {
+      accordionItem.classList.add('open');
+      var header = accordionItem.querySelector('.accordion-header');
+      if (header) header.setAttribute('aria-expanded', 'true');
+    }
+
+    syncLayerStack(wasOpen ? '' : layerNum);
+    accordionItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
   document.querySelectorAll('.layer-stack-item').forEach(function (item) {
     item.addEventListener('click', function () {
-      var layerNum = item.getAttribute('data-layer');
-      var accordionItem = document.getElementById('layer' + layerNum);
-      if (!accordionItem) return;
-
-      var wasOpen = accordionItem.classList.contains('open');
-      document.querySelectorAll('.accordion-item.open').forEach(function (openItem) {
-        openItem.classList.remove('open');
-        var h = openItem.querySelector('.accordion-header');
-        if (h) h.setAttribute('aria-expanded', 'false');
-      });
-
-      if (!wasOpen) {
-        accordionItem.classList.add('open');
-        var header = accordionItem.querySelector('.accordion-header');
-        if (header) header.setAttribute('aria-expanded', 'true');
+      activateLayerStack(item);
+    });
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateLayerStack(item);
       }
-
-      syncLayerStack(wasOpen ? '' : layerNum);
-      accordionItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
 
@@ -253,6 +263,9 @@
     if (countedSet.has(el)) return;
     countedSet.add(el);
 
+    var display = el.querySelector('.counter-display');
+    if (!display) display = el;
+
     var target = parseFloat(el.getAttribute('data-count'));
     var suffix = el.getAttribute('data-suffix') || '';
     var isFloat = String(target).indexOf('.') !== -1;
@@ -266,15 +279,15 @@
       var current = target * eased;
 
       if (isFloat) {
-        el.textContent = current.toFixed(1) + suffix;
+        display.textContent = current.toFixed(1) + suffix;
       } else {
-        el.textContent = Math.round(current) + suffix;
+        display.textContent = Math.round(current) + suffix;
       }
 
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        el.textContent = (isFloat ? target.toFixed(1) : String(target)) + suffix;
+        display.textContent = (isFloat ? target.toFixed(1) : String(target)) + suffix;
       }
     }
 
