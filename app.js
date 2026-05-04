@@ -3,23 +3,22 @@
 
   var isDarkMode = true;
 
-  function sanitize(str) {
-    var div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
+  /* ========== Theme ========== */
   function updateThemeIcons() {
     var moonIcon = document.getElementById('moonIcon');
     var sunIcon = document.getElementById('sunIcon');
     var toggle = document.getElementById('themeToggle');
     if (!moonIcon || !sunIcon) return;
     if (isDarkMode) {
-      moonIcon.style.display = 'block';
-      sunIcon.style.display = 'none';
+      moonIcon.classList.add('icon-visible');
+      moonIcon.classList.remove('icon-hidden');
+      sunIcon.classList.add('icon-hidden');
+      sunIcon.classList.remove('icon-visible');
     } else {
-      moonIcon.style.display = 'none';
-      sunIcon.style.display = 'block';
+      moonIcon.classList.add('icon-hidden');
+      moonIcon.classList.remove('icon-visible');
+      sunIcon.classList.add('icon-visible');
+      sunIcon.classList.remove('icon-hidden');
     }
     if (toggle) toggle.setAttribute('aria-pressed', String(isDarkMode));
   }
@@ -37,6 +36,7 @@
     });
   }
 
+  /* ========== Mobile Menu ========== */
   var mobileMenuBtn = document.getElementById('mobileMenuBtn');
   var mobileMenuClose = document.getElementById('mobileMenuClose');
   var mobileNav = document.getElementById('mobileNav');
@@ -52,8 +52,8 @@
     if (overlay) overlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
     if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'true');
-    var firstLink = mobileNav ? mobileNav.querySelector('.nav-link') : null;
-    if (firstLink) firstLink.focus();
+    var firstLink = mobileNav ? mobileNav.querySelector('button, a[href]') : null;
+    if (firstLink) setTimeout(function () { firstLink.focus(); }, 50);
   }
 
   function closeMobileMenu() {
@@ -64,7 +64,7 @@
     if (overlay) overlay.classList.remove('visible');
     document.body.style.overflow = '';
     if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
-    if (lastFocusedElement) lastFocusedElement.focus();
+    if (lastFocusedElement) setTimeout(function () { lastFocusedElement.focus(); }, 50);
   }
 
   if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
@@ -106,6 +106,18 @@
 
   if (mobileNav) mobileNav.addEventListener('keydown', trapFocus);
 
+  /* Close drawer on resize to desktop */
+  var resizeTimeout;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function () {
+      if (window.innerWidth > 1024 && mobileNav && mobileNav.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    }, 150);
+  }, { passive: true });
+
+  /* ========== Accordion ========== */
   document.querySelectorAll('.accordion-header').forEach(function (header) {
     header.addEventListener('click', function () {
       var item = header.parentElement;
@@ -141,9 +153,20 @@
         }
         if (next) next.focus();
       }
+      if (e.key === 'Home') {
+        e.preventDefault();
+        var items = document.querySelectorAll('.accordion-header');
+        if (items[0]) items[0].focus();
+      }
+      if (e.key === 'End') {
+        e.preventDefault();
+        var items = document.querySelectorAll('.accordion-header');
+        if (items[items.length - 1]) items[items.length - 1].focus();
+      }
     });
   });
 
+  /* ========== Scroll Reveal ========== */
   var revealObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -160,6 +183,7 @@
     revealObserver.observe(el);
   });
 
+  /* ========== Active Section Nav ========== */
   var sections = document.querySelectorAll('section[id]');
   var navLinks = document.querySelectorAll('.sidebar-nav .nav-link, .mobile-nav-drawer .nav-link');
 
@@ -184,39 +208,45 @@
     navObserver.observe(section);
   });
 
+  /* ========== Clipboard ========== */
   function copyToClipboard(text, btn) {
-    if (!text) return Promise.resolve();
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text).then(function () {
-        btn.textContent = 'Copied \u2713';
-        btn.classList.add('copied');
-        setTimeout(function () {
-          btn.textContent = 'Copy';
-          btn.classList.remove('copied');
-        }, 2000);
-      });
-    }
-    var textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-      document.execCommand('copy');
+    if (!text || !btn) return Promise.resolve();
+
+    function onSuccess() {
+      var original = btn.textContent;
       btn.textContent = 'Copied \u2713';
       btn.classList.add('copied');
+      btn.setAttribute('aria-live', 'polite');
       setTimeout(function () {
-        btn.textContent = 'Copy';
+        btn.textContent = original || 'Copy';
         btn.classList.remove('copied');
       }, 2000);
-    } catch (err) {
+    }
+
+    function onFail() {
       btn.textContent = 'Failed';
       setTimeout(function () {
         btn.textContent = 'Copy';
       }, 2000);
     }
-    document.body.removeChild(textarea);
+
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(onSuccess).catch(onFail);
+    }
+
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      var ok = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (ok) { onSuccess(); } else { onFail(); }
+    } catch (err) {
+      document.body.removeChild(textarea);
+      onFail();
+    }
     return Promise.resolve();
   }
 
@@ -230,54 +260,33 @@
     });
   });
 
+  /* ========== Prompt Generator ========== */
   function generatePrompt() {
-    var sysIdentity = document.getElementById('sysIdentity');
-    var sysCapabilities = document.getElementById('sysCapabilities');
-    var sysConstraints = document.getElementById('sysConstraints');
-    var sysScope = document.getElementById('sysScope');
+    var fields = {
+      sysIdentity: document.getElementById('sysIdentity'),
+      sysCapabilities: document.getElementById('sysCapabilities'),
+      sysConstraints: document.getElementById('sysConstraints'),
+      sysScope: document.getElementById('sysScope'),
+      taskDirective: document.getElementById('taskDirective'),
+      taskOutput: document.getElementById('taskOutput'),
+      taskEvidence: document.getElementById('taskEvidence'),
+      taskSuccess: document.getElementById('taskSuccess'),
+      toolIndex: document.getElementById('toolIndex'),
+      toolThreshold: document.getElementById('toolThreshold'),
+      toolDepth: document.getElementById('toolDepth'),
+      memEpisodes: document.getElementById('memEpisodes'),
+      memPlaybook: document.getElementById('memPlaybook'),
+      memAnti: document.getElementById('memAnti'),
+      memCompression: document.getElementById('memCompression'),
+      routeCategory: document.getElementById('routeCategory'),
+      routeTrigger: document.getElementById('routeTrigger'),
+      routeHandoff: document.getElementById('routeHandoff')
+    };
 
-    var taskDirective = document.getElementById('taskDirective');
-    var taskOutput = document.getElementById('taskOutput');
-    var taskEvidence = document.getElementById('taskEvidence');
-    var taskSuccess = document.getElementById('taskSuccess');
+    if (!fields.sysIdentity || !fields.toolThreshold || !fields.memCompression || !fields.routeCategory) return;
 
-    var toolIndex = document.getElementById('toolIndex');
-    var toolThreshold = document.getElementById('toolThreshold');
-    var toolDepth = document.getElementById('toolDepth');
-
-    var memEpisodes = document.getElementById('memEpisodes');
-    var memPlaybook = document.getElementById('memPlaybook');
-    var memAnti = document.getElementById('memAnti');
-    var memCompression = document.getElementById('memCompression');
-
-    var routeCategory = document.getElementById('routeCategory');
-    var routeTrigger = document.getElementById('routeTrigger');
-    var routeHandoff = document.getElementById('routeHandoff');
-
-    if (!sysIdentity || !toolThreshold || !memCompression || !routeCategory) return;
-
-    var identity = sysIdentity.value || 'You are an expert agent';
-    var capabilities = sysCapabilities.value || 'General reasoning and task completion';
-    var constraints = sysConstraints.value || 'None specified';
-    var scope = sysScope.value || 'General domain';
-
-    var directive = taskDirective.value || 'Complete the assigned task to the best of your ability';
-    var output = taskOutput.value || 'Plain text response';
-    var evidence = taskEvidence.value || 'Standard evidentiary requirements';
-    var success = taskSuccess.value || 'Task completed satisfactorily';
-
-    var tIndex = toolIndex.value || 'No tools specified';
-    var threshold = parseInt(toolThreshold.value, 10) / 100;
-    var depth = toolDepth.value || '3';
-
-    var episodes = memEpisodes.value || 'No episodic context';
-    var playbook = memPlaybook.value || 'No Playbook patterns';
-    var anti = memAnti.value || 'No anti-patterns specified';
-    var compression = memCompression.value;
-
-    var category = routeCategory.value;
-    var trigger = routeTrigger.value || 'No sub-agent trigger specified';
-    var handoff = routeHandoff.value || 'No handoff format specified';
+    var thresholdVal = parseInt(fields.toolThreshold.value, 10) || 80;
+    var threshold = thresholdVal / 100;
 
     var compressionLabels = {
       'session_end': 'End of session',
@@ -298,36 +307,44 @@
     };
 
     function formatList(str) {
-      return str.split('\n').filter(function (l) { return l.trim(); }).map(function (l) { return '- ' + l.trim(); }).join('\n') || '- None specified';
+      return (str || '').split('\n').filter(function (l) { return l.trim(); }).map(function (l) { return '- ' + l.trim(); }).join('\n') || '- None specified';
     }
 
     function formatCSV(str) {
-      return str.split(',').map(function (c) { return '- ' + c.trim(); }).join('\n');
+      return (str || '').split(',').map(function (c) { return '- ' + c.trim(); }).join('\n');
+    }
+
+    function val(field) {
+      return (field && field.value) || '';
+    }
+
+    function def(field, fallback) {
+      return val(field) || fallback;
     }
 
     var prompt = '=== SYSTEM PROMPT ===\n\n'
       + '## Layer 1: System\n\n'
-      + '**Identity:** ' + identity + '\n\n'
-      + '**Capabilities:**\n' + formatCSV(capabilities) + '\n\n'
-      + '**Hard Constraints:**\n' + formatList(constraints) + '\n\n'
-      + '**Domain Scope:** ' + scope + '\n\n'
+      + '**Identity:** ' + def(fields.sysIdentity, 'You are an expert agent') + '\n\n'
+      + '**Capabilities:**\n' + formatCSV(val(fields.sysCapabilities) || 'General reasoning and task completion') + '\n\n'
+      + '**Hard Constraints:**\n' + formatList(val(fields.sysConstraints) || 'None specified') + '\n\n'
+      + '**Domain Scope:** ' + def(fields.sysScope, 'General domain') + '\n\n'
       + '## Layer 2: Task\n\n'
-      + '**Primary Directive:** ' + directive + '\n\n'
-      + '**Output Format:** ' + output + '\n\n'
-      + '**Evidentiary Standard:** ' + evidence + '\n\n'
-      + '**Success Criterion:** ' + success + '\n\n'
+      + '**Primary Directive:** ' + def(fields.taskDirective, 'Complete the assigned task to the best of your ability') + '\n\n'
+      + '**Output Format:** ' + def(fields.taskOutput, 'Plain text response') + '\n\n'
+      + '**Evidentiary Standard:** ' + def(fields.taskEvidence, 'Standard evidentiary requirements') + '\n\n'
+      + '**Success Criterion:** ' + def(fields.taskSuccess, 'Task completed satisfactorily') + '\n\n'
       + '## Layer 3: Tools\n\n'
-      + '**Available Tools (Index Only \u2014 full schemas loaded JIT if relevance >= ' + threshold.toFixed(2) + '):**\n' + formatList(tIndex) + '\n\n'
-      + '**Max Tool Chain Depth:** ' + depth + '\n\n'
+      + '**Available Tools (Index Only \u2014 full schemas loaded JIT if relevance >= ' + threshold.toFixed(2) + '):**\n' + formatList(val(fields.toolIndex) || 'No tools specified') + '\n\n'
+      + '**Max Tool Chain Depth:** ' + def(fields.toolDepth, '3') + '\n\n'
       + '## Layer 4: Memory\n\n'
-      + '**Episodic Context (decays by half-life):**\n' + formatList(episodes) + '\n\n'
-      + '**Playbook Patterns (pinned, persistent):**\n' + formatList(playbook) + '\n\n'
-      + '**Anti-Patterns (strictly forbidden):**\n' + formatList(anti) + '\n\n'
-      + '**Compression Trigger:** ' + (compressionLabels[compression] || compression) + '\n\n'
+      + '**Episodic Context (decays by half-life):**\n' + formatList(val(fields.memEpisodes) || 'No episodic context') + '\n\n'
+      + '**Playbook Patterns (pinned, persistent):**\n' + formatList(val(fields.memPlaybook) || 'No Playbook patterns') + '\n\n'
+      + '**Anti-Patterns (strictly forbidden):**\n' + formatList(val(fields.memAnti) || 'No anti-patterns specified') + '\n\n'
+      + '**Compression Trigger:** ' + (compressionLabels[fields.memCompression.value] || fields.memCompression.value) + '\n\n'
       + '## Layer 5: Routing\n\n'
-      + '**Task Category:** ' + (categoryLabels[category] || category) + '\n\n'
-      + '**Sub-Agent Trigger:** ' + trigger + '\n\n'
-      + '**Handoff Format:** ' + handoff + '\n\n'
+      + '**Task Category:** ' + (categoryLabels[fields.routeCategory.value] || fields.routeCategory.value) + '\n\n'
+      + '**Sub-Agent Trigger:** ' + def(fields.routeTrigger, 'No sub-agent trigger specified') + '\n\n'
+      + '**Handoff Format:** ' + def(fields.routeHandoff, 'No handoff format specified') + '\n\n'
       + '---\n'
       + '**Context Budget:** System + Task always loaded. Tool/Memory/Routing layers loaded dynamically based on relevance threshold (' + threshold.toFixed(2) + ').';
 
@@ -339,6 +356,9 @@
     if (codeEl) codeEl.textContent = prompt;
     outputArea.style.display = 'block';
     outputArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    /* Update URL hash for shareability */
+    history.pushState(null, '', '#blueprint');
   }
 
   var promptForm = document.getElementById('promptForm');
@@ -360,6 +380,7 @@
     });
   }
 
+  /* ========== Slider ARIA ========== */
   var toolThreshold = document.getElementById('toolThreshold');
   var thresholdValue = document.getElementById('thresholdValue');
   if (toolThreshold && thresholdValue) {
@@ -371,6 +392,7 @@
     });
   }
 
+  /* ========== Smooth Scroll + History ========== */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       var targetId = this.getAttribute('href');
@@ -384,8 +406,34 @@
     });
   });
 
+  /* ========== Back to Top ========== */
+  var backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    var scrollObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      });
+    });
+
+    var heroSection = document.getElementById('hero');
+    if (heroSection) scrollObserver.observe(heroSection);
+
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.pushState(null, '', ' ');
+    });
+  }
+
+  /* ========== Init ========== */
   document.querySelectorAll('.accordion-item.open').forEach(function (item) {
     var header = item.querySelector('.accordion-header');
     if (header) header.setAttribute('aria-expanded', 'true');
   });
+
+  /* Remove no-js class since JS loaded */
+  document.documentElement.classList.remove('no-js');
 })();
