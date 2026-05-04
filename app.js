@@ -106,7 +106,6 @@
 
   if (mobileNav) mobileNav.addEventListener('keydown', trapFocus);
 
-  /* Close drawer on resize to desktop */
   var resizeTimeout;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimeout);
@@ -138,6 +137,8 @@
         item.classList.add('open');
         header.setAttribute('aria-expanded', 'true');
       }
+
+      syncLayerStack(item.id ? item.id.replace('layer', '') : '');
     });
 
     header.addEventListener('keydown', function (e) {
@@ -163,6 +164,42 @@
         var items = document.querySelectorAll('.accordion-header');
         if (items[items.length - 1]) items[items.length - 1].focus();
       }
+    });
+  });
+
+  /* ========== Layer Stack Diagram ========== */
+  function syncLayerStack(activeLayer) {
+    var stackItems = document.querySelectorAll('.layer-stack-item');
+    stackItems.forEach(function (si) {
+      if (si.getAttribute('data-layer') === String(activeLayer)) {
+        si.classList.add('active');
+      } else {
+        si.classList.remove('active');
+      }
+    });
+  }
+
+  document.querySelectorAll('.layer-stack-item').forEach(function (item) {
+    item.addEventListener('click', function () {
+      var layerNum = item.getAttribute('data-layer');
+      var accordionItem = document.getElementById('layer' + layerNum);
+      if (!accordionItem) return;
+
+      var wasOpen = accordionItem.classList.contains('open');
+      document.querySelectorAll('.accordion-item.open').forEach(function (openItem) {
+        openItem.classList.remove('open');
+        var h = openItem.querySelector('.accordion-header');
+        if (h) h.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!wasOpen) {
+        accordionItem.classList.add('open');
+        var header = accordionItem.querySelector('.accordion-header');
+        if (header) header.setAttribute('aria-expanded', 'true');
+      }
+
+      syncLayerStack(wasOpen ? '' : layerNum);
+      accordionItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
 
@@ -207,6 +244,182 @@
   sections.forEach(function (section) {
     navObserver.observe(section);
   });
+
+  /* ========== Animated Counters ========== */
+  var counters = document.querySelectorAll('.stat-value[data-count]');
+  var countedSet = new Set();
+
+  function animateCounter(el) {
+    if (countedSet.has(el)) return;
+    countedSet.add(el);
+
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-suffix') || '';
+    var isFloat = String(target).indexOf('.') !== -1;
+    var duration = 1500;
+    var start = performance.now();
+
+    function step(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = target * eased;
+
+      if (isFloat) {
+        el.textContent = current.toFixed(1) + suffix;
+      } else {
+        el.textContent = Math.round(current) + suffix;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = (isFloat ? target.toFixed(1) : String(target)) + suffix;
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  var counterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(function (c) { counterObserver.observe(c); });
+
+  /* ========== Reading Progress Bar ========== */
+  var progressBar = document.getElementById('readingProgress');
+
+  function updateReadingProgress() {
+    if (!progressBar) return;
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var percent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    progressBar.style.width = percent + '%';
+  }
+
+  /* ========== Sidebar Progress ========== */
+  var sidebarFill = document.getElementById('sidebarProgressFill');
+
+  function updateSidebarProgress() {
+    if (!sidebarFill) return;
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var percent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    sidebarFill.style.height = percent + '%';
+  }
+
+  window.addEventListener('scroll', function () {
+    updateReadingProgress();
+    updateSidebarProgress();
+  }, { passive: true });
+
+  updateReadingProgress();
+  updateSidebarProgress();
+
+  /* ========== Card Spotlight Effect ========== */
+  document.querySelectorAll('.card-interactive').forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', x + 'px');
+      card.style.setProperty('--mouse-y', y + 'px');
+    });
+  });
+
+  /* ========== Hero Particles ========== */
+  var heroParticles = document.getElementById('heroParticles');
+  var heroCanvas = heroParticles ? heroParticles.querySelector('canvas') : null;
+
+  if (heroCanvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var ctx = heroCanvas.getContext('2d');
+    var particles = [];
+    var particleCount = 50;
+    var animationId;
+
+    function resizeCanvas() {
+      var parent = heroCanvas.parentElement;
+      if (!parent) return;
+      heroCanvas.width = parent.offsetWidth;
+      heroCanvas.height = parent.offsetHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(resizeCanvas, 200);
+    });
+
+    function createParticle() {
+      return {
+        x: Math.random() * heroCanvas.width,
+        y: Math.random() * heroCanvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 1.5 + 0.5,
+        opacity: Math.random() * 0.3 + 0.1
+      };
+    }
+
+    for (var i = 0; i < particleCount; i++) {
+      particles.push(createParticle());
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+
+      var r, g, b;
+      if (isDarkMode) {
+        r = 79; g = 152; b = 163;
+      } else {
+        r = 1; g = 105; b = 111;
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = heroCanvas.width;
+        if (p.x > heroCanvas.width) p.x = 0;
+        if (p.y < 0) p.y = heroCanvas.height;
+        if (p.y > heroCanvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + p.opacity + ')';
+        ctx.fill();
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            var alpha = (1 - dist / 120) * 0.08;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationId = requestAnimationFrame(drawParticles);
+    }
+
+    drawParticles();
+  }
 
   /* ========== Clipboard ========== */
   function copyToClipboard(text, btn) {
@@ -357,7 +570,6 @@
     outputArea.style.display = 'block';
     outputArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    /* Update URL hash for shareability */
     history.pushState(null, '', '#blueprint');
   }
 
@@ -428,12 +640,40 @@
     });
   }
 
+  /* ========== Hero Typing Effect ========== */
+  var heroHeadline = document.getElementById('heroHeadline');
+  if (heroHeadline && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var fullText = 'Context Engineering for Agentic Systems';
+    var cursor = heroHeadline.querySelector('.typing-cursor');
+    heroHeadline.textContent = '';
+    if (cursor) heroHeadline.appendChild(cursor);
+
+    var charIndex = 0;
+    var typingDelay = 45;
+
+    function typeNextChar() {
+      if (charIndex < fullText.length) {
+        var textNode = document.createTextNode(fullText[charIndex]);
+        if (cursor) {
+          heroHeadline.insertBefore(textNode, cursor);
+        } else {
+          heroHeadline.appendChild(textNode);
+        }
+        charIndex++;
+        setTimeout(typeNextChar, typingDelay);
+      }
+    }
+
+    setTimeout(typeNextChar, 400);
+  }
+
   /* ========== Init ========== */
   document.querySelectorAll('.accordion-item.open').forEach(function (item) {
     var header = item.querySelector('.accordion-header');
     if (header) header.setAttribute('aria-expanded', 'true');
   });
 
-  /* Remove no-js class since JS loaded */
+  syncLayerStack('1');
+
   document.documentElement.classList.remove('no-js');
 })();

@@ -35,6 +35,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2301696f'/%3E%3Ctext x='16' y='22' font-family='Instrument+Serif' font-size='18' fill='white' text-anchor='middle'%3ECE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
   <a href="#main-content" class="skip-link">Skip to content</a>
 
   <header class="site-header">
@@ -84,6 +85,7 @@
 
   <div class="main-layout" id="main-content">
     <nav class="sidebar-nav" aria-label="Section navigation">
+      <div class="sidebar-progress" aria-hidden="true"><div class="sidebar-progress-fill" id="sidebarProgressFill"></div></div>
       <ul>
         <li><a href="#foundations" class="nav-link">Foundations</a></li>
         <li><a href="#patterns" class="nav-link">Patterns</a></li>
@@ -97,123 +99,19 @@
     <main id="main-primary">
       <!-- HERO -->
       <section class="hero" id="hero">
+        <div class="hero-particles" id="heroParticles" aria-hidden="true"><canvas></canvas></div>
         <div class="container">
           <p class="section-eyebrow">Reference Resource</p>
-          <h1 class="hero-headline">Context Engineering for Agentic Systems</h1>
+          <h1 class="hero-headline" id="heroHeadline">Context Engineering for Agentic Systems<span class="typing-cursor" aria-hidden="true"></span></h1>
           <p class="hero-subheadline">Context engineering is the systems discipline of designing what information enters an AI's working memory, in what structure, at what time, and how it evolves — so that agents consistently produce correct, verifiable, and useful output.</p>
           <div class="hero-ctas">
-            <a href="#patterns" class="btn btn-primary">Explore Patterns</a>
-            <a href="#blueprint" class="btn btn-secondary">View Blueprint</a>
+            <a href="#patterns" class="btn btn-primary" data-tooltip="Jump to the 8 patterns">Explore Patterns</a>
+            <a href="#blueprint" class="btn btn-secondary" data-tooltip="Build your own prompt">View Blueprint</a>
           </div>
         </div>
       </section>
 
-      <!-- FOUNDATIONS -->
-      <section id="foundations">
-        <div class="container">
-          <p class="section-eyebrow">Section 01</p>
-          <h2 class="section-title">What Is Context Engineering</h2>
-          <p class="section-intro">Prompt engineering is writing instructions. Context engineering is architecting the entire cognitive environment your agent needs to reason correctly.</p>
-
-          <div class="reveal">
-            <p style="margin-bottom:var(--space-8); max-width:72ch;">
-              Every failure in an agentic system can be traced to one of four context failures: <strong>ambiguity</strong> — the model lacks clear constraints and generates conflicting outputs; <strong>distractor interference</strong> — irrelevant context overwhelms relevant signal (the "lost-in-the-middle" effect, arXiv:2307.03172); <strong>context rot</strong> — earlier instructions decay as new tokens accumulate, degrading adherence to constraints; and <strong>attention dilution</strong> — excessive context length spreads attention thin, reducing accuracy on any single component.
-            </p>
-          </div>
-
-          <div class="reveal mt-12">
-            <h3 style="margin-bottom:var(--space-6);">The 5-Layer Stratified Context System</h3>
-            <p style="margin-bottom:var(--space-8); max-width:72ch;">
-              Production agentic systems decompose context into five layers, each with distinct persistence, retrieval, and eviction policies. Click each layer to expand.
-            </p>
-
-            <div class="accordion" id="layersAccordion">
-              <div class="accordion-item open" id="layer1">
-                <button class="accordion-header" aria-expanded="true" aria-controls="layer1-content" id="layer1-header">
-                  <span>Layer 1 — System Layer</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                  </svg>
-                </button>
-                <div class="accordion-content" id="layer1-content" role="region" aria-labelledby="layer1-header">
-                  <div class="accordion-body">
-                    <p><strong>Identity, constraints, scope.</strong> The system layer defines who the agent is, what it can and cannot do, and the domain boundaries it must respect. This layer is <em>pinned</em> — it is never evicted and always occupies the first tokens of the context window.</p>
-                    <p style="margin-top:var(--space-3);"><strong>Production rule:</strong> Keep under 400 tokens. Include only non-negotiable constraints. Anything optional belongs in a lower layer.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item" id="layer2">
-                <button class="accordion-header" aria-expanded="false" aria-controls="layer2-content" id="layer2-header">
-                  <span>Layer 2 — Task Layer</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                  </svg>
-                </button>
-                <div class="accordion-content" id="layer2-content" role="region" aria-labelledby="layer2-header">
-                  <div class="accordion-body">
-                    <p><strong>Directive, output schema, success criterion.</strong> The task layer specifies what the agent must accomplish right now. It includes the primary directive (what to do), the output format specification (schema, constraints), and the success criterion (how to know it is done).</p>
-                    <p style="margin-top:var(--space-3);"><strong>Production rule:</strong> One task per invocation. If a task has multiple sub-tasks, use sub-agents with fresh context, not a single long prompt.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item" id="layer3">
-                <button class="accordion-header" aria-expanded="false" aria-controls="layer3-content" id="layer3-header">
-                  <span>Layer 3 — Tool Layer</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                  </svg>
-                </button>
-                <div class="accordion-content" id="layer3-content" role="region" aria-labelledby="layer3-header">
-                  <div class="accordion-body">
-                    <p><strong>Index-only JIT loading, retrieval thresholds.</strong> The tool layer contains <em>indices</em> of available tools — their names, descriptions, and input schemas. Full tool documentation is loaded just-in-time only when the router classifies a task as requiring that tool.</p>
-                    <p style="margin-top:var(--space-3);"><strong>Production rule:</strong> Maintain a relevance threshold (typically 0.75–0.85). Only load tool documentation whose semantic similarity to the task exceeds this threshold. This prevents tool bloat from consuming context budget.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item" id="layer4">
-                <button class="accordion-header" aria-expanded="false" aria-controls="layer4-content" id="layer4-header">
-                  <span>Layer 4 — Memory Layer</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                  </svg>
-                </button>
-                <div class="accordion-content" id="layer4-content" role="region" aria-labelledby="layer4-header">
-                  <div class="accordion-body">
-                    <p><strong>Compressed episodes + Playbook patterns.</strong> The memory layer stores what the agent has learned from past interactions. Raw transcripts are <em>never</em> stored verbatim — they are compressed into semantic patterns via a compression layer.</p>
-                    <p style="margin-top:var(--space-3);"><strong>Production rule:</strong> Episodic memory decays with a half-life based on recency and importance. Semantic patterns from the Playbook are pinned. Memory retrieval uses hybrid search: vector similarity + temporal decay + importance weighting.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item" id="layer5">
-                <button class="accordion-header" aria-expanded="false" aria-controls="layer5-content" id="layer5-header">
-                  <span>Layer 5 — Routing Layer</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                  </svg>
-                </button>
-                <div class="accordion-content" id="layer5-content" role="region" aria-labelledby="layer5-header">
-                  <div class="accordion-body">
-                    <p><strong>Semantic classification, agent dispatch.</strong> The routing layer is not content — it is a decision boundary. A classifier reads the user query and determines which agent profile, tool set, and memory subset to load. It is the gatekeeper that prevents irrelevant context from entering working memory.</p>
-                    <p style="margin-top:var(--space-3);"><strong>Production rule:</strong> Two-pass routing is preferred: first classify the domain, then classify the task within that domain. This hierarchical routing reduces classification error rates by 40–60% compared to flat routing (source: Anthropic multi-agent systems research, 90.2% accuracy improvement via context isolation).</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reveal mt-12" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:var(--space-6);">
-            <div>
-              <p class="stat-value">90.2%</p>
-              <p class="stat-label">Accuracy improvement via sub-agent context isolation</p>
-              <p style="font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-2);">Anthropic multi-agent systems research</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div class="section-divider" aria-hidden="true"></div>
 
       <!-- PATTERNS -->
       <section id="patterns">
@@ -223,7 +121,7 @@
           <p class="section-intro">Each pattern addresses a specific failure mode in agentic context management. Every card includes what the pattern solves, how to implement it, and the anti-pattern to avoid.</p>
 
           <div class="grid-2 stagger" id="patternCards">
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 01</p>
               <h3 class="card-title">Layered Context Architecture</h3>
               <div class="card-body">
@@ -233,7 +131,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 02</p>
               <h3 class="card-title">Just-in-Time Loading</h3>
               <div class="card-body">
@@ -243,7 +141,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 03</p>
               <h3 class="card-title">Context Isolation via Sub-Agents</h3>
               <div class="card-body">
@@ -253,7 +151,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 04</p>
               <h3 class="card-title">Semantic Routing</h3>
               <div class="card-body">
@@ -263,7 +161,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 05</p>
               <h3 class="card-title">ACE Loop</h3>
               <div class="card-body">
@@ -273,7 +171,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 06</p>
               <h3 class="card-title">Progressive Disclosure</h3>
               <div class="card-body">
@@ -283,7 +181,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 07</p>
               <h3 class="card-title">Corrective RAG Triggers</h3>
               <div class="card-body">
@@ -293,7 +191,7 @@
               </div>
             </article>
 
-            <article class="card reveal">
+            <article class="card card-interactive reveal">
               <p class="card-meta">Pattern 08</p>
               <h3 class="card-title">Memory Compression</h3>
               <div class="card-body">
@@ -305,6 +203,8 @@
           </div>
         </div>
       </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
 
       <!-- ACE FRAMEWORK -->
       <section id="ace">
@@ -437,12 +337,14 @@
           </div>
 
           <div class="reveal mt-12 callout-box">
-            <p class="stat-value" style="font-size:var(--text-xl);">82%</p>
+            <p class="stat-value" style="font-size:var(--text-xl);" data-count="82" data-suffix="%">0%</p>
             <p style="font-size:var(--text-lg); color:var(--color-text); margin-top:var(--space-2);">Accuracy on complex QA, up from 61% baseline</p>
             <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-top:var(--space-2);">Stanford / SambaNova Deep Research Agent — ACE-open, arXiv:2510.04618</p>
           </div>
         </div>
       </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
 
       <!-- MEMORY -->
       <section id="memory">
@@ -563,6 +465,8 @@
         </div>
       </section>
 
+      <div class="section-divider" aria-hidden="true"></div>
+
       <!-- MULTI-AGENT -->
       <section id="multi-agent">
         <div class="container">
@@ -644,6 +548,8 @@
           </div>
         </div>
       </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
 
       <!-- BLUEPRINT -->
       <section id="blueprint">
