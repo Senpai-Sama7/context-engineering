@@ -43,6 +43,14 @@
         <span>Context Engineering</span>
       </a>
       <div class="header-actions">
+        <button class="jargon-toggle" id="jargonToggle" aria-label="Toggle jargon explanations" aria-pressed="false" data-tooltip="Explain tech terms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <path d="M12 17h.01"/>
+          </svg>
+          <span class="jargon-toggle-label">Explain</span>
+        </button>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" aria-pressed="true">
           <svg id="moonIcon" class="icon-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
@@ -878,6 +886,18 @@
       <path d="M18 15l-6-6-6 6"/>
     </svg>
   </button>
+
+  <div class="jargon-panel" id="jargonPanel" role="tooltip" aria-hidden="true" aria-live="polite">
+    <div class="jargon-panel-term">
+      <span id="jargonPanelTerm"></span>
+      <button class="jargon-panel-close" id="jargonPanelClose" aria-label="Close explanation">&times;</button>
+    </div>
+    <div class="jargon-panel-body" id="jargonPanelBody"></div>
+    <div class="jargon-panel-see-also" id="jargonPanelSeeAlso" style="display:none;">
+      <p class="jargon-panel-see-also-label">See also</p>
+      <div id="jargonPanelLinks"></div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
