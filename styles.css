@@ -556,6 +556,26 @@ section:first-of-type {
   transform: translateY(-1px);
 }
 
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+.btn-outline:hover {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.book-download-callout-action {
+  margin-top: var(--space-4);
+  margin-bottom: 0;
+}
+
 .btn-sm {
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-xs);
