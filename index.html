@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Context Engineering for Agentic Systems</title>
-  <meta name="description" content="The complete reference on context engineering for agentic AI systems. Patterns, frameworks, and production-ready implementations.">
+  <title>The Agentic Practitioner Playbook</title>
+  <meta name="description" content="Context Engineering, Prompting, Claude Code, and Production Agents. The practitioner reference for building agentic AI systems.">
   <meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
 
-  <meta property="og:title" content="Context Engineering for Agentic Systems">
-  <meta property="og:description" content="The complete reference on context engineering for agentic AI systems. Patterns, frameworks, and production-ready implementations.">
+  <meta property="og:title" content="The Agentic Practitioner Playbook">
+  <meta property="og:description" content="Context Engineering · Prompting · Claude Code · Production Agents. Patterns, tools, and production-ready implementations.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://context-engineering-site.vercel.app/">
   <meta property="og:image" content="https://context-engineering-site.vercel.app/favicon.ico">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Context Engineering for Agentic Systems">
-  <meta name="twitter:description" content="The complete reference on context engineering for agentic AI systems.">
+  <meta name="twitter:title" content="The Agentic Practitioner Playbook">
+  <meta name="twitter:description" content="Context Engineering · Prompting · Claude Code · Production Agents.">
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src https://fonts.gstatic.com https://api.fontshare.com; img-src 'self' data:; connect-src 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src https://fonts.gstatic.com https://api.fontshare.com https://cdn.fontshare.com; img-src 'self' data:; connect-src 'self';">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="canonical" href="https://context-engineering-site.vercel.app/">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2301696f'/%3E%3Ctext x='16' y='22' font-family='Instrument+Serif' font-size='18' fill='white' text-anchor='middle'%3ECE%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2301696f'/%3E%3Ctext x='16' y='22' font-family='Instrument%20Serif' font-size='14' fill='white' text-anchor='middle'%3EAPP%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
@@ -35,12 +35,12 @@
 
   <header class="site-header">
     <div class="container">
-      <a href="#" class="logo" aria-label="Context Engineering — Home">
+      <a href="#" class="logo" aria-label="The Agentic Practitioner Playbook — Home">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect width="32" height="32" rx="4" fill="currentColor" style="color: var(--color-primary);"/>
-          <text x="16" y="22" font-family="Instrument Serif" font-size="18" fill="white" text-anchor="middle">CE</text>
+          <text x="16" y="22" font-family="Instrument Serif" font-size="14" fill="white" text-anchor="middle">APP</text>
         </svg>
-        <span>Context Engineering</span>
+        <span>APP</span>
       </a>
       <div class="header-actions">
         <button class="jargon-toggle" id="jargonToggle" aria-label="Toggle jargon explanations" aria-pressed="false" data-tooltip="Explain tech terms">
@@ -77,12 +77,24 @@
       </svg>
     </button>
     <ul style="margin-top:var(--space-8);">
+      <li class="nav-group-label">Guide</li>
       <li><a href="#foundations" class="nav-link">Foundations</a></li>
-      <li><a href="#patterns" class="nav-link">Patterns</a></li>
+      <li><a href="#context" class="nav-link">Context</a></li>
+      <li><a href="#prompting101" class="nav-link">Prompting 101</a></li>
+      <li><a href="#architecture" class="nav-link">Architecture</a></li>
+      <li><a href="#claude-code" class="nav-link">Claude Code</a></li>
+      <li><a href="#routines" class="nav-link">Routines</a></li>
+      <li><a href="#evals" class="nav-link">Evals</a></li>
+      <li class="nav-group-label">Tools</li>
+      <li><a href="#tool-agent-wizard" class="nav-link">Agent Wizard</a></li>
+      <li><a href="#tool-budget-auditor" class="nav-link">Budget Auditor</a></li>
+      <li><a href="#tool-10point-builder" class="nav-link">10-Point Builder</a></li>
+      <li><a href="#tool-routine-designer" class="nav-link">Routine Designer</a></li>
+      <li class="nav-group-label">Advanced</li>
       <li><a href="#ace" class="nav-link">ACE Framework</a></li>
       <li><a href="#memory" class="nav-link">Memory</a></li>
       <li><a href="#multi-agent" class="nav-link">Multi-Agent</a></li>
-      <li><a href="#blueprint" class="nav-link">Prompt Generator</a></li>
+      <li><a href="#blueprint" class="nav-link">Advanced Builder</a></li>
     </ul>
   </nav>
 
@@ -90,12 +102,24 @@
     <nav class="sidebar-nav" aria-label="Section navigation">
       <div class="sidebar-progress" aria-hidden="true"><div class="sidebar-progress-fill" id="sidebarProgressFill"></div></div>
       <ul>
+        <li class="nav-group-label">Guide</li>
         <li><a href="#foundations" class="nav-link">Foundations</a></li>
-        <li><a href="#patterns" class="nav-link">Patterns</a></li>
+        <li><a href="#context" class="nav-link">Context</a></li>
+        <li><a href="#prompting101" class="nav-link">Prompting 101</a></li>
+        <li><a href="#architecture" class="nav-link">Architecture</a></li>
+        <li><a href="#claude-code" class="nav-link">Claude Code</a></li>
+        <li><a href="#routines" class="nav-link">Routines</a></li>
+        <li><a href="#evals" class="nav-link">Evals</a></li>
+        <li class="nav-group-label">Tools</li>
+        <li><a href="#tool-agent-wizard" class="nav-link">Agent Wizard</a></li>
+        <li><a href="#tool-budget-auditor" class="nav-link">Budget Auditor</a></li>
+        <li><a href="#tool-10point-builder" class="nav-link">10-Point Builder</a></li>
+        <li><a href="#tool-routine-designer" class="nav-link">Routine Designer</a></li>
+        <li class="nav-group-label">Advanced</li>
         <li><a href="#ace" class="nav-link">ACE Framework</a></li>
         <li><a href="#memory" class="nav-link">Memory</a></li>
         <li><a href="#multi-agent" class="nav-link">Multi-Agent</a></li>
-        <li><a href="#blueprint" class="nav-link">Prompt Generator</a></li>
+        <li><a href="#blueprint" class="nav-link">Advanced Builder</a></li>
       </ul>
     </nav>
 
@@ -104,12 +128,12 @@
       <section class="hero" id="hero">
         <div class="hero-particles" id="heroParticles" aria-hidden="true"><canvas></canvas></div>
         <div class="container">
-          <p class="section-eyebrow">Reference Resource</p>
-          <h1 class="hero-headline" id="heroHeadline">Context Engineering for Agentic Systems<span class="typing-cursor" aria-hidden="true"></span></h1>
-          <p class="hero-subheadline">Context engineering is the systems discipline of designing what information enters an AI's working memory, in what structure, at what time, and how it evolves — so that agents consistently produce correct, verifiable, and useful output.</p>
+          <p class="section-eyebrow">Practitioner Reference</p>
+          <h1 class="hero-headline" id="heroHeadline">The Agentic Practitioner Playbook<span class="typing-cursor" aria-hidden="true"></span></h1>
+          <p class="hero-subheadline">The practitioner reference for context engineering, prompting, Claude Code, routines, and production agents — designing what enters working memory, in what structure, at what time.</p>
           <div class="hero-ctas">
-            <a href="#patterns" class="btn btn-primary" data-tooltip="Jump to the 8 patterns">Explore Patterns</a>
-            <a href="#blueprint" class="btn btn-secondary" data-tooltip="Build your own prompt">View Blueprint</a>
+            <a href="#foundations" class="btn btn-primary" data-tooltip="Start with foundations">Start Learning</a>
+            <a href="#tool-agent-wizard" class="btn btn-secondary" data-tooltip="Should you build an agent?">Agent Wizard</a>
           </div>
         </div>
       </section>
@@ -120,10 +144,87 @@
       <section id="foundations">
         <div class="container">
           <p class="section-eyebrow">Section 01</p>
-          <h2 class="section-title">What Is Context Engineering</h2>
-          <p class="section-intro">Prompt engineering is writing instructions. Context engineering is architecting the entire cognitive environment your agent needs to reason correctly.</p>
+          <h2 class="section-title">Foundations</h2>
+          <p class="section-intro">Before building agents, understand when they're appropriate — and architect the cognitive environment your agent needs to reason correctly.</p>
 
           <div class="reveal">
+            <h3 class="subsection-title">Barry's Evolution Ladder</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">Don't jump to agents. Climb the ladder: ship <strong>features</strong> (single model calls), orchestrate <strong>workflows</strong> (mapped control flows), then deploy <strong>agents</strong> only when complexity and value justify autonomy.</p>
+            <div class="evolution-ladder">
+              <div class="evolution-rung">
+                <h4>Features</h4>
+                <p style="font-size:var(--text-sm); margin-top:var(--space-2);">Summarize, classify, extract — one shot, fixed flow.</p>
+              </div>
+              <div class="evolution-rung">
+                <h4>Workflows</h4>
+                <p style="font-size:var(--text-sm); margin-top:var(--space-2);">Multiple models in a predefined decision tree. Cheaper, more control.</p>
+              </div>
+              <div class="evolution-rung active-rung">
+                <h4>Agents</h4>
+                <p style="font-size:var(--text-sm); margin-top:var(--space-2);">Model + tools in a loop. Decides its own trajectory from environment feedback.</p>
+              </div>
+            </div>
+            <p class="source-footnote">Source: Barry, <em>Building Effective Agents</em> — AI Engineer Summit</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">The 3-Component Model</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">Strip an agent to its core: a model calling tools in a loop. Every complexity on top costs iteration speed and eventually performance.</p>
+            <div class="three-component-grid">
+              <div class="component-card">
+                <h4>Environment</h4>
+                <p style="font-size:var(--text-sm); margin-top:var(--space-2);">The system the agent operates in — repos, APIs, file systems, product surfaces.</p>
+              </div>
+              <div class="component-card">
+                <h4>Tools</h4>
+                <p style="font-size:var(--text-sm); margin-top:var(--space-2);">Interface for action and feedback. Lean into primitives: code execution, files, web search.</p>
+              </div>
+              <div class="component-card">
+                <h4>System Prompt</h4>
+                <p style="font-size:var(--text-sm); margin-top:var(--space-2);">Goals, constraints, ideal behavior — what the agent always needs regardless of task.</p>
+              </div>
+            </div>
+            <p class="source-footnote">Source: Barry 3-component model; <em>anthropic_ultimate_guide.md</em> Part II</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">The 4-Factor Checklist</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">Run this before building an agent. All four factors determine fit — and all four kill projects when ignored. <a href="#tool-agent-wizard">Try the Agent Suitability Wizard →</a></p>
+            <div class="grid-2 stagger">
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Factor 01</p>
+                <h3 class="card-title">Complexity</h3>
+                <div class="card-body">
+                  <p>Agents thrive in ambiguous problem spaces. If you can map the full decision tree easily, build it explicitly and optimize every node.</p>
+                </div>
+              </article>
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Factor 02</p>
+                <h3 class="card-title">Value</h3>
+                <div class="card-body">
+                  <p>Exploration costs tokens. A $0.10/task budget affords 30–50 tokens — use a workflow. If ROI justifies spend, agents earn their cost.</p>
+                </div>
+              </article>
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Factor 03</p>
+                <h3 class="card-title">Bottlenecks</h3>
+                <div class="card-body">
+                  <p>Derisk critical capabilities first. A coding agent needs write, debug, and recover. Bottlenecks multiply cost and latency — reduce scope.</p>
+                </div>
+              </article>
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Factor 04</p>
+                <h3 class="card-title">Cost of Error</h3>
+                <div class="card-body">
+                  <p>High-stakes, hard-to-discover errors limit autonomy. Mitigate with read-only access or human-in-the-loop — but that caps scale.</p>
+                </div>
+              </article>
+            </div>
+            <p class="source-footnote">Source: Barry 4-factor checklist transcript; <em>anthropic_ultimate_guide.md</em></p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">What Is Context Engineering</h3>
             <p style="margin-bottom:var(--space-8); max-width:72ch;">
               Every failure in an agentic system can be traced to one of four context failures: <strong>ambiguity</strong> — the model lacks clear constraints and generates conflicting outputs; <strong>distractor interference</strong> — irrelevant context overwhelms relevant signal (the "lost-in-the-middle" effect, arXiv:2307.03172); <strong>context rot</strong> — earlier instructions decay as new tokens accumulate, degrading adherence to constraints; and <strong>attention dilution</strong> — excessive context length spreads attention thin, reducing accuracy on any single component.
             </p>
@@ -255,12 +356,47 @@
 
       <div class="section-divider" aria-hidden="true"></div>
 
-      <!-- PATTERNS -->
-      <section id="patterns">
+      <!-- CONTEXT -->
+      <section id="context">
         <div class="container">
           <p class="section-eyebrow">Section 02</p>
-          <h2 class="section-title">The 8 Core Patterns</h2>
-          <p class="section-intro">Each pattern addresses a specific failure mode in agentic context management. Every card includes what the pattern solves, how to implement it, and the anti-pattern to avoid.</p>
+          <h2 class="section-title">Context Engineering</h2>
+          <p class="section-intro">Govern what enters the context window, in what order, at what compression ratio. Context engineering is upstream of prompt engineering.</p>
+
+          <div class="reveal">
+            <h3 class="subsection-title">Token Budget Allocation</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">Allocate budget before writing prompts. Exceeding it causes silent truncation — the worst failure mode. <a href="#tool-budget-auditor">Run the Budget Auditor →</a></p>
+            <div class="budget-bars" id="budgetBars">
+              <div class="budget-bar-row"><span class="budget-bar-label">System + skills</span><div class="budget-bar-track"><div class="budget-bar-fill" style="width:10%"></div></div><span class="budget-bar-pct">≤10%</span></div>
+              <div class="budget-bar-row"><span class="budget-bar-label">Task + few-shot</span><div class="budget-bar-track"><div class="budget-bar-fill" style="width:15%"></div></div><span class="budget-bar-pct">≤15%</span></div>
+              <div class="budget-bar-row"><span class="budget-bar-label">Retrieved docs</span><div class="budget-bar-track"><div class="budget-bar-fill" style="width:40%"></div></div><span class="budget-bar-pct">≤40%</span></div>
+              <div class="budget-bar-row"><span class="budget-bar-label">Working state</span><div class="budget-bar-track"><div class="budget-bar-fill" style="width:20%"></div></div><span class="budget-bar-pct">≤20%</span></div>
+              <div class="budget-bar-row"><span class="budget-bar-label">Output buffer</span><div class="budget-bar-track"><div class="budget-bar-fill" style="width:15%"></div></div><span class="budget-bar-pct">≤15%</span></div>
+            </div>
+            <p class="source-footnote">Source: Context Engineering skill — budget allocation phase</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Injection Order</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">Ordering is mechanistic, not cosmetic. Exploit primacy bias, recency bias, and lost-in-the-middle degradation.</p>
+            <div class="injection-order">
+              <div class="injection-step primacy"><span class="injection-zone-tag">Primacy</span> System role + hard constraints</div>
+              <div class="injection-step middle"><span class="injection-zone-tag">Early</span> Task definition + few-shot examples</div>
+              <div class="injection-step middle"><span class="injection-zone-tag">Middle</span> Background / supporting documents</div>
+              <div class="injection-step recency"><span class="injection-zone-tag">Recency</span> Most relevant retrieved documents</div>
+              <div class="injection-step recency"><span class="injection-zone-tag">Late</span> Compressed conversation history</div>
+              <div class="injection-step recency"><span class="injection-zone-tag">Final</span> Current user input</div>
+            </div>
+          </div>
+
+          <div class="reveal mt-12 callout-warning">
+            <p><strong>Context Poisoning:</strong> Retrieved documents can contain injected instructions that hijack model behavior. Always run a poisoning detection layer on retrieved content before injection. Never trust vector search results blindly.</p>
+            <p class="source-footnote" style="border:none; padding-top:var(--space-3);">Source: Context Engineering skill — Phase 0 audit checklist</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">The 8 Core Patterns</h3>
+          <p class="section-intro" style="margin-bottom:var(--space-8);">Each pattern addresses a specific failure mode in agentic context management.</p>
 
           <div class="grid-2 stagger" id="patternCards">
             <article class="card card-interactive reveal">
@@ -343,6 +479,351 @@
               </div>
             </article>
           </div>
+
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+
+      <!-- PROMPTING 101 -->
+      <section id="prompting101">
+        <div class="container">
+          <p class="section-eyebrow">Section 03</p>
+          <h2 class="section-title">Prompting 101</h2>
+          <p class="section-intro">Prompt engineering is iterative empirical science: test, observe failure modes, bake missing context back in, repeat. <a href="#tool-10point-builder">Build a structured prompt →</a></p>
+
+          <div class="reveal">
+            <h3 class="subsection-title">The 10-Point Structure</h3>
+            <ol class="ten-point-list">
+              <li><div><strong>Task context</strong> — Role and purpose. Who is Claude and what is it doing?</div></li>
+              <li><div><strong>Tone context</strong> — Factual, cautious, confident. When to admit uncertainty.</div></li>
+              <li><div><strong>Background / static content</strong> — Unchanging schemas, forms, reference docs. Cache in system prompt.</div></li>
+              <li><div><strong>Dynamic content</strong> — Per-query inputs: images, user data, retrieved chunks.</div></li>
+              <li><div><strong>Step-by-step instructions</strong> — Explicit reasoning order. Order matters significantly.</div></li>
+              <li><div><strong>Examples (few-shot)</strong> — Hard cases with ideal input/output pairs.</div></li>
+              <li><div><strong>Conversation history</strong> — Prior turns when multi-turn context is needed.</div></li>
+              <li><div><strong>Task reminder</strong> — Restate what Claude is doing right now.</div></li>
+              <li><div><strong>Critical guardrails</strong> — Anti-hallucination rules, confidence thresholds.</div></li>
+              <li><div><strong>Output format</strong> — XML tags, JSON schema, or pre-filled assistant turn.</div></li>
+            </ol>
+            <p class="source-footnote">Source: Hannah &amp; Christian, <em>Prompting 101</em> — Anthropic Applied AI</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Skiing → Car Accident: Before / After</h3>
+            <p style="margin-bottom:var(--space-4); max-width:72ch;">A minimal prompt caused Claude to misread a Swedish car crash as a skiing accident. Layering task context, form schema, and step-wise instructions fixed it.</p>
+            <div class="toggle-group" role="group" aria-label="Prompt version">
+              <button type="button" class="toggle-btn active" data-prompt-toggle="before" aria-pressed="true">V1 — Minimal</button>
+              <button type="button" class="toggle-btn" data-prompt-toggle="after" aria-pressed="false">V4 — Structured</button>
+            </div>
+            <div class="prompt-compare" data-prompt-version="before">
+              <p><strong>Prompt:</strong> Review this accident report and determine who is at fault.</p>
+              <p style="margin-top:var(--space-3); color:var(--color-error);"><strong>Result:</strong> Claude interprets the scene as a <em>skiing accident</em> on Shoppangatan — plausible guess without domain context.</p>
+            </div>
+            <div class="prompt-compare hidden" data-prompt-version="after">
+              <p><strong>Prompt includes:</strong> Swedish auto insurance adjuster role · car accident domain · 17-checkbox form schema in system prompt · form-first then sketch reasoning order · XML output tags.</p>
+              <p style="margin-top:var(--space-3); color:var(--color-success);"><strong>Result:</strong> Correct vehicle identification, checkbox mapping, and fault assessment with evidence citations.</p>
+            </div>
+            <p class="source-footnote">Source: Prompting 101 workshop — car accident demo</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- ARCHITECTURE -->
+      <section id="architecture">
+        <div class="container">
+          <p class="section-eyebrow">Section 04</p>
+          <h2 class="section-title">Agent Architecture</h2>
+          <p class="section-intro">An agent is a model calling tools in a loop. Environment + tools + system prompt — keep it simple, then optimize.</p>
+
+          <div class="reveal callout-warning">
+            <h3 style="margin-bottom:var(--space-4);">Stock Pilot: Architecture Decay</h3>
+            <p>Inventory agent Stock Pilot started targeted and working. Business requirements arrived — forecast subagent bolted on, report writer added, system prompt grew to <strong>400 lines</strong>, 12 tools (3 wrapping subagents). Evals dropped from <strong>83% → 62%</strong>. Not a model failure — an architecture failure.</p>
+            <ul style="margin:var(--space-4) 0 0 var(--space-6); font-size:var(--text-sm);">
+              <li><strong>F1:</strong> Right answer, winding inefficient path (turn count failure)</li>
+              <li><strong>F2:</strong> Subagent correct, orchestrator misreads output (communication breakdown)</li>
+              <li><strong>R8:</strong> Contradictory policies in long system prompt → wrong multiplier (3.1× vs 1.35×)</li>
+            </ul>
+            <p class="source-footnote" style="border:none;">Source: Will, <em>Agent Decomposition Workshop</em> — Stock Pilot</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Tool / Skill / Subagent Matrix</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Primitive</th><th>Use When</th><th>Avoid When</th></tr></thead>
+                <tbody>
+                  <tr class="matrix-highlight"><td><strong>Tool</strong></td><td>Specific external action or authenticated API call that generic primitives cannot do</td><td>You could accomplish it with bash + file system + code execution</td></tr>
+                  <tr><td><strong>Skill</strong></td><td>Domain procedure needed sometimes — formatting rules, policies, specialized knowledge</td><td>Information needed on every task (belongs in system prompt or CLAUDE.md)</td></tr>
+                  <tr><td><strong>Subagent</strong></td><td>Parallelizable work needing isolation + explicit handoff contract</td><td>Task is small, or coordination overhead exceeds benefit</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">MCP vs Skills</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Dimension</th><th>MCP Servers</th><th>Skills</th></tr></thead>
+                <tbody>
+                  <tr><td>Purpose</td><td>Wrap external systems as callable tools (GitHub, Slack, DBs)</td><td>Package composable knowledge/procedures for on-demand context load</td></tr>
+                  <tr><td>Loaded</td><td>Tool schemas at session start or JIT by relevance</td><td>Retrieved when model determines task needs them</td></tr>
+                  <tr><td>Config</td><td><code>mcp.json</code> in repo — team inherits same servers</td><td>Skill files in <code>.agents/skills/</code> or project paths</td></tr>
+                  <tr><td>Best for</td><td>Actions: deploy, query, notify, browse</td><td>Knowledge: domain expertise, formatting, audit protocols</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="source-footnote">Source: Boris Claude Code workshop; Daisy Holman harness talk</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- CLAUDE CODE -->
+      <section id="claude-code">
+        <div class="container">
+          <p class="section-eyebrow">Section 05</p>
+          <h2 class="section-title">Claude Code</h2>
+          <p class="section-intro">Not autocomplete — a fully agentic assistant. Terminal-native, works with any IDE, runs bash + edits + MCP in a loop.</p>
+
+          <div class="reveal">
+            <h3 class="subsection-title">Q&A → Plan → Verify Ladder</h3>
+            <div class="ladder-steps">
+              <div class="ladder-step"><span class="ladder-step-num">1</span><div><strong>Codebase Q&amp;A</strong> — Ask how X works before changing anything. Onboarding drops from 2–3 weeks to 2–3 days.</div></div>
+              <div class="ladder-step"><span class="ladder-step-num">2</span><div><strong>Plan before code</strong> — "Before you write code, make a plan and run it by me." Eliminates building the wrong thing correctly.</div></div>
+              <div class="ladder-step"><span class="ladder-step-num">3</span><div><strong>Verify loop</strong> — Give Claude tests, screenshots, or CI. It iterates until green. Enables async: let it run while you work elsewhere.</div></div>
+            </div>
+            <p class="source-footnote">Source: Boris Cherny, Claude Code workshop</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">CLAUDE.md Hierarchy</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Level</th><th>Scope</th><th>Contents</th></tr></thead>
+                <tbody>
+                  <tr><td>Enterprise</td><td>All employees</td><td>Central policies, blocked commands/URLs</td></tr>
+                  <tr><td>Global</td><td>User machine</td><td>Personal defaults, global MCP config</td></tr>
+                  <tr><td>Project</td><td>Repo root (checked in)</td><td>Commands, architecture, style guides, MCP servers</td></tr>
+                  <tr><td>Local</td><td>Personal, not checked in</td><td>Individual preferences</td></tr>
+                  <tr><td>Nested</td><td>Subdirectories</td><td>Per-service docs, loaded when working in that path</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:var(--space-4);">Press <kbd>#</kbd> during a session to have Claude remember something and update CLAUDE.md automatically.</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Keybindings</h3>
+            <div class="keybinding-grid">
+              <div class="kbd-item"><kbd>Shift+Tab</kbd><span>Auto-accept edits (bash still gated)</span></div>
+              <div class="kbd-item"><kbd>#</kbd><span>Remember → updates CLAUDE.md</span></div>
+              <div class="kbd-item"><kbd>!</kbd><span>Run bash — output enters context</span></div>
+              <div class="kbd-item"><kbd>Esc</kbd><span>Stop safely, redirect next step</span></div>
+              <div class="kbd-item"><kbd>Esc Esc</kbd><span>Jump back in history</span></div>
+              <div class="kbd-item"><kbd>Ctrl+R</kbd><span>View full context as Claude sees it</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- ROUTINES -->
+      <section id="routines">
+        <div class="container">
+          <p class="section-eyebrow">Section 06</p>
+          <h2 class="section-title">Routines</h2>
+          <p class="section-intro">Routines are higher-order prompts — preconfigured Claude Code sessions on managed infrastructure. The default shifts from "I'll prompt Claude" to "Claude prompts Claude." <a href="#tool-routine-designer">Design a routine →</a></p>
+
+          <div class="reveal">
+            <h3 class="subsection-title">Three Design Decisions</h3>
+            <div class="grid-3" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:var(--space-6);">
+              <article class="card"><p class="card-meta">01</p><h3 class="card-title">Trigger</h3><div class="card-body"><p>Schedule (weekly doc sync) or event (PR merged, CI failed, deploy complete, webhook).</p></div></article>
+              <article class="card"><p class="card-meta">02</p><h3 class="card-title">Context</h3><div class="card-body"><p>Repos, connectors (GitHub, Slack, Drive, Datadog). Context ceiling = capability ceiling.</p></div></article>
+              <article class="card"><p class="card-meta">03</p><h3 class="card-title">Steering</h3><div class="card-body"><p>Generator+critiquer patterns, human monitoring, verification before marking done.</p></div></article>
+            </div>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Production Examples</h3>
+            <div class="grid-2 stagger">
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Example 01</p>
+                <h3 class="card-title">Docs Maintainer</h3>
+                <div class="card-body">
+                  <p><strong>Trigger:</strong> Weekly schedule or PRs labeled <code>needs-docs</code></p>
+                  <p><strong>Context:</strong> Source repo + docs repo + marketing briefs from Drive</p>
+                  <p><strong>Behavior:</strong> Diff branches, detect undocumented features, open PRs, notify Slack</p>
+                </div>
+              </article>
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Example 02</p>
+                <h3 class="card-title">Deploy Verifier</h3>
+                <div class="card-body">
+                  <p><strong>Trigger:</strong> CD webhook after each deploy</p>
+                  <p><strong>Context:</strong> Service code + Datadog/Grafana + Slack</p>
+                  <p><strong>Behavior:</strong> Inspect logs/metrics, summarize go/no-go, recommend rollback</p>
+                </div>
+              </article>
+              <article class="card card-interactive reveal">
+                <p class="card-meta">Example 03</p>
+                <h3 class="card-title">CI Auto-Fix</h3>
+                <div class="card-body">
+                  <p><strong>Trigger:</strong> PR opened or CI failure event</p>
+                  <p><strong>Context:</strong> Repo + CI logs + review comments</p>
+                  <p><strong>Behavior:</strong> Fix review comments, retry flaky CI, rebase on conflicts — engineer never sees red X</p>
+                </div>
+              </article>
+            </div>
+            <p class="source-footnote">Source: Daisy Holman routines demo; Maya Holman routines workshop</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- EVALS -->
+      <section id="evals">
+        <div class="container">
+          <p class="section-eyebrow">Section 07</p>
+          <h2 class="section-title">Evals &amp; Hill Climbing</h2>
+          <p class="section-intro">83% pass rate with 17% failure is expensive in manufacturing — and unacceptable in production without a recovery loop.</p>
+
+          <div class="reveal">
+            <h3 class="subsection-title">Regression vs Failure-Mode Evals</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Type</th><th>ID Prefix</th><th>What It Tests</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Regression (R)</strong></td><td>R1, R8…</td><td>Single-turn tasks with defined correct responses — "did we break anything?"</td></tr>
+                  <tr><td><strong>Failure mode (F)</strong></td><td>F1, F2…</td><td>Multi-turn probes for known weaknesses — inefficient paths, handoff breakdowns, policy conflicts</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:var(--space-6);">Track deterministic metrics (turn count, tokens, latency) and non-deterministic quality (LLM-as-judge for tone, reasoning, policy compliance).</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Hill-Climbing Loop</h3>
+            <div class="ladder-steps">
+              <div class="ladder-step"><span class="ladder-step-num">1</span><div>Run evals → baseline (e.g. 83%)</div></div>
+              <div class="ladder-step"><span class="ladder-step-num">2</span><div>Diagnose failures by <em>theme</em>, not symptom</div></div>
+              <div class="ladder-step"><span class="ladder-step-num">3</span><div>One architectural fix (skills, tool consolidation, handoff contract)</div></div>
+              <div class="ladder-step"><span class="ladder-step-num">4</span><div>Re-run evals → confirm improvement → repeat</div></div>
+            </div>
+          </div>
+
+          <div class="reveal mt-12 callout-box">
+            <h3 style="margin-bottom:var(--space-4);">Claude Triage Technique</h3>
+            <p>Feed eval results to Claude Code (Opus, high effort). Ask it to: identify failing evals, diagnose root cause per failure, group into themes. Common themes: model doing retrieval in reasoning instead of via tools, subagent/orchestrator schema mismatch, conflicting system prompt policies, missing context causing hallucinated values.</p>
+            <p class="source-footnote" style="border:none; margin-top:var(--space-4);">Source: Will Stock Pilot workshop; <em>anthropic_ultimate_guide.md</em> Part VII</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- TOOL A: AGENT WIZARD -->
+      <section id="tool-agent-wizard" class="tool-section">
+        <div class="container">
+          <p class="section-eyebrow">Interactive Tool A</p>
+          <h2 class="section-title">Agent Suitability Wizard</h2>
+          <p class="section-intro">Barry's 4-factor checklist — should you build a workflow, agent, or hybrid?</p>
+          <form id="wizardForm" class="reveal" novalidate>
+            <div class="form-group"><label class="form-label" for="wizComplexity">Task Complexity <span id="wizComplexityVal">Moderate</span></label><input type="range" id="wizComplexity" min="1" max="5" value="3" aria-valuemin="1" aria-valuemax="5"></div>
+            <div class="form-group"><label class="form-label" for="wizValue">Task Value <span id="wizValueVal">Moderate</span></label><input type="range" id="wizValue" min="1" max="5" value="3"></div>
+            <div class="form-group"><label class="form-label" for="wizBottlenecks">Capability Bottlenecks <span id="wizBottlenecksVal">Moderate</span></label><input type="range" id="wizBottlenecks" min="1" max="5" value="3"></div>
+            <div class="form-group"><label class="form-label" for="wizErrorCost">Cost of Error <span id="wizErrorCostVal">Moderate</span></label><input type="range" id="wizErrorCost" min="1" max="5" value="3"></div>
+            <button type="submit" class="btn btn-primary">Get Recommendation</button>
+          </form>
+          <div class="wizard-result reveal" id="wizardOutput" style="display:none;" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- TOOL B: BUDGET AUDITOR -->
+      <section id="tool-budget-auditor" class="tool-section">
+        <div class="container">
+          <p class="section-eyebrow">Interactive Tool B</p>
+          <h2 class="section-title">Context Budget Auditor</h2>
+          <p class="section-intro">Audit allocation against standard limits (10/15/40/20/15%). Flags OVER LIMIT categories.</p>
+          <form id="auditForm" class="reveal" novalidate>
+            <div class="form-group"><label class="form-label" for="auditTotal">Total Token Budget</label><input type="number" class="form-input" id="auditTotal" value="200000" min="1000" style="max-width:200px;"></div>
+            <div class="form-group"><label class="form-label" for="auditMode">Input Mode</label><select class="form-select" id="auditMode" style="max-width:200px;"><option value="percent">Percentages</option><option value="tokens">Token counts</option></select></div>
+            <div class="audit-input-group form-group"><label class="form-label"><span class="audit-pct-label">System + skills (%)</span><span class="audit-token-label" style="display:none;">System + skills (tokens)</span></label><input type="number" class="form-input" id="audit_system" value="10" min="0" style="max-width:120px;"></div>
+            <div class="audit-input-group form-group"><label class="form-label"><span class="audit-pct-label">Task + few-shot (%)</span><span class="audit-token-label" style="display:none;">Task (tokens)</span></label><input type="number" class="form-input" id="audit_task" value="15" min="0" style="max-width:120px;"></div>
+            <div class="audit-input-group form-group"><label class="form-label"><span class="audit-pct-label">Retrieved docs (%)</span><span class="audit-token-label" style="display:none;">Retrieved (tokens)</span></label><input type="number" class="form-input" id="audit_retrieved" value="45" min="0" style="max-width:120px;"></div>
+            <div class="audit-input-group form-group"><label class="form-label"><span class="audit-pct-label">Working state (%)</span><span class="audit-token-label" style="display:none;">Working (tokens)</span></label><input type="number" class="form-input" id="audit_working" value="20" min="0" style="max-width:120px;"></div>
+            <div class="audit-input-group form-group"><label class="form-label"><span class="audit-pct-label">Output buffer (%)</span><span class="audit-token-label" style="display:none;">Output (tokens)</span></label><input type="number" class="form-input" id="audit_output" value="10" min="0" style="max-width:120px;"></div>
+            <button type="submit" class="btn btn-primary">Run Audit</button>
+          </form>
+          <div class="output-area reveal" id="auditOutput" style="display:none;" aria-live="polite">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3>Audit Report</h3><button class="btn btn-sm btn-secondary" id="copyAuditBtn" type="button">Copy</button></div>
+            <pre class="audit-report" id="auditReport"></pre>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- TOOL C: 10-POINT BUILDER -->
+      <section id="tool-10point-builder" class="tool-section">
+        <div class="container">
+          <p class="section-eyebrow">Interactive Tool C</p>
+          <h2 class="section-title">Anthropic 10-Point Prompt Builder</h2>
+          <p class="section-intro">XML-tagged structured prompts — distinct from the 5-layer stratified generator.</p>
+          <button type="button" class="btn btn-secondary btn-sm" id="p10PrefillBtn" style="margin-bottom:var(--space-6);">Pre-fill: Car Accident Example</button>
+          <form id="p10Form" class="reveal" novalidate>
+            <div class="form-group"><label class="form-label" for="p10_taskContext">1. Task Context</label><textarea class="form-textarea" id="p10_taskContext" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_toneContext">2. Tone Context</label><textarea class="form-textarea" id="p10_toneContext" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_background">3. Background / Static Content</label><textarea class="form-textarea" id="p10_background" rows="3"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_dynamic">4. Dynamic Content</label><textarea class="form-textarea" id="p10_dynamic" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_steps">5. Step-by-Step Instructions</label><textarea class="form-textarea" id="p10_steps" rows="4"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_examples">6. Examples</label><textarea class="form-textarea" id="p10_examples" rows="3"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_history">7. Conversation History</label><textarea class="form-textarea" id="p10_history" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_reminder">8. Task Reminder</label><textarea class="form-textarea" id="p10_reminder" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_guardrails">9. Guardrails</label><textarea class="form-textarea" id="p10_guardrails" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_outputFormat">10. Output Format</label><textarea class="form-textarea" id="p10_outputFormat" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label" for="p10_prefill">Pre-fill Assistant Turn (optional)</label><input type="text" class="form-input" id="p10_prefill" placeholder="e.g. &lt;form_analysis&gt;"></div>
+            <button type="submit" class="btn btn-primary">Generate XML Prompt</button>
+          </form>
+          <div class="output-area reveal" id="p10Output" style="display:none;" aria-live="polite">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3>Generated Prompt</h3><button class="btn btn-sm btn-secondary" id="copyP10Btn" type="button">Copy</button></div>
+            <div class="code-block"><pre id="p10Generated"><code></code></pre></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- TOOL D: ROUTINE DESIGNER -->
+      <section id="tool-routine-designer" class="tool-section">
+        <div class="container">
+          <p class="section-eyebrow">Interactive Tool D</p>
+          <h2 class="section-title">Routine Designer</h2>
+          <p class="section-intro">Generate a markdown routine spec with trigger, context, steering, and example /schedule command.</p>
+          <form id="routineForm" class="reveal" novalidate>
+            <div class="form-group"><label class="form-label" for="routineName">Routine Name</label><input type="text" class="form-input" id="routineName" placeholder="docs-maintainer"></div>
+            <div class="form-group"><label class="form-label" for="routineTriggerType">Trigger Type</label><select class="form-select" id="routineTriggerType"><option value="schedule">Schedule</option><option value="event">Event / Webhook</option></select></div>
+            <div class="form-group"><label class="form-label" for="routineTriggerDetail">Trigger Config</label><input type="text" class="form-input" id="routineTriggerDetail" placeholder="0 9 * * 1 or github:pr.merged"></div>
+            <div class="form-group"><label class="form-label" for="routineRepos">Repos</label><input type="text" class="form-input" id="routineRepos" placeholder="app-repo, docs-repo"></div>
+            <div class="form-group"><label class="form-label" for="routineConnectors">Connectors</label><input type="text" class="form-input" id="routineConnectors" placeholder="GitHub, Slack, Drive"></div>
+            <div class="form-group"><label class="form-label" for="routineSteering">Steering Pattern</label><select class="form-select" id="routineSteering"><option value="Generator + human review">Generator + human review</option><option value="Generator + critiquer routine">Generator + critiquer routine</option><option value="Verify then notify">Verify then notify</option><option value="CI auto-fix loop">CI auto-fix loop</option></select></div>
+            <div class="form-group"><label class="form-label" for="routineInstructions">Instructions</label><textarea class="form-textarea" id="routineInstructions" rows="5" placeholder="Role, success criteria, verification steps..."></textarea></div>
+            <button type="submit" class="btn btn-primary">Generate Routine Spec</button>
+          </form>
+          <div class="output-area reveal" id="routineOutput" style="display:none;" aria-live="polite">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3>Routine Spec</h3><button class="btn btn-sm btn-secondary" id="copyRoutineBtn" type="button">Copy</button></div>
+            <div class="code-block"><pre id="routineGenerated"><code></code></pre></div>
+          </div>
         </div>
       </section>
 
@@ -351,138 +832,24 @@
       <!-- ACE FRAMEWORK -->
       <section id="ace">
         <div class="container">
-          <p class="section-eyebrow">Section 03</p>
-          <h2 class="section-title">ACE Framework Deep Dive</h2>
-          <p class="section-intro">The Generator-Reflector-Curator triad enables agentic systems to self-improve by compressing experience into reusable Playbook patterns.</p>
-
-          <div class="reveal">
-            <div class="ace-diagram" id="aceDiagram">
-              <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ACE Framework diagram: Generator produces output, Reflector evaluates and identifies gaps, Curator updates the Playbook, which feeds back to the Generator">
-                <defs>
-                  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-muted)" stroke="none"/>
-                  </marker>
-                </defs>
-                <rect x="50" y="120" width="180" height="80" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
-                <text x="140" y="155" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="16" font-weight="500" fill="var(--color-text)">Generator</text>
-                <text x="140" y="175" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="12" fill="var(--color-text-muted)">Produces output</text>
-
-                <line x1="230" y1="160" x2="310" y2="160" stroke="var(--color-text-muted)" stroke-width="2" marker-end="url(#arrow)" class="diagram-path"/>
-
-                <rect x="310" y="120" width="180" height="80" rx="8" fill="var(--color-surface)" stroke="var(--color-warning)" stroke-width="2"/>
-                <text x="400" y="155" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="16" font-weight="500" fill="var(--color-text)">Reflector</text>
-                <text x="400" y="175" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="12" fill="var(--color-text-muted)">Evaluates &amp; identifies gaps</text>
-
-                <line x1="490" y1="160" x2="570" y2="160" stroke="var(--color-text-muted)" stroke-width="2" marker-end="url(#arrow)" class="diagram-path"/>
-
-                <rect x="570" y="120" width="180" height="80" rx="8" fill="var(--color-surface)" stroke="var(--color-success)" stroke-width="2"/>
-                <text x="660" y="155" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="16" font-weight="500" fill="var(--color-text)">Curator</text>
-                <text x="660" y="175" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="12" fill="var(--color-text-muted)">Updates Playbook</text>
-
-                <path d="M 660 200 L 660 260 L 140 260 L 140 200" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrow)" class="diagram-path"/>
-                <text x="400" y="250" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="12" fill="var(--color-primary)">Updated Playbook feeds back</text>
-              </svg>
-            </div>
+          <p class="section-eyebrow">Advanced</p>
+          <h2 class="section-title">ACE Framework</h2>
+          <p class="section-intro">Generator → Reflector → Curator. Self-improvement by compressing experience into Playbook patterns.</p>
+          <div class="reveal ace-diagram" id="aceDiagram">
+            <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ACE Framework diagram">
+              <defs><marker id="arrow-ace" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-muted)" stroke="none"/></marker></defs>
+              <rect x="50" y="120" width="180" height="80" rx="8" fill="var(--color-surface)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="140" y="160" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="16" fill="var(--color-text)">Generator</text>
+              <line x1="230" y1="160" x2="310" y2="160" stroke="var(--color-text-muted)" stroke-width="2" marker-end="url(#arrow-ace)"/>
+              <rect x="310" y="120" width="180" height="80" rx="8" fill="var(--color-surface)" stroke="var(--color-warning)" stroke-width="2"/>
+              <text x="400" y="160" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="16" fill="var(--color-text)">Reflector</text>
+              <line x1="490" y1="160" x2="570" y2="160" stroke="var(--color-text-muted)" stroke-width="2" marker-end="url(#arrow-ace)"/>
+              <rect x="570" y="120" width="180" height="80" rx="8" fill="var(--color-surface)" stroke="var(--color-success)" stroke-width="2"/>
+              <text x="660" y="160" text-anchor="middle" font-family="Satoshi, sans-serif" font-size="16" fill="var(--color-text)">Curator</text>
+              <path d="M 660 200 L 660 260 L 140 260 L 140 200" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrow-ace)"/>
+            </svg>
           </div>
-
-          <div class="reveal mt-12">
-            <h3 style="margin-bottom:var(--space-6);">Playbook Anatomy</h3>
-            <p style="margin-bottom:var(--space-6); max-width:72ch;">The Playbook is the curated memory of the ACE system. It is not raw logs — it is compressed, structured knowledge that the Generator uses on every subsequent invocation.</p>
-
-            <div class="code-block">
-              <button class="copy-btn" data-action="copy-code">Copy</button>
-              <pre><code>{
-  "playbook_version": "1.0",
-  "strategy_entries": [
-    {
-      "id": "str-001",
-      "pattern": "When user asks for code review, always check for test coverage first",
-      "domain": "software_engineering",
-      "frequency": 23,
-      "last_used": "2026-04-15",
-      "confidence": 0.94
-    }
-  ],
-  "anti_patterns": [
-    {
-      "id": "anti-001",
-      "pattern": "Never assume the user wants the most recent version — always confirm version context",
-      "trigger_count": 7,
-      "severity": "high"
-    }
-  ],
-  "format_rules": [
-    {
-      "id": "fmt-001",
-      "condition": "output_type == 'technical_spec'",
-      "rule": "Use RFC-2119 keywords (MUST, SHOULD, MAY) for requirements"
-    }
-  ],
-  "retrieval_heuristics": [
-    {
-      "id": "ret-001",
-      "query_signature": "code + review + python",
-      "relevant_strategies": ["str-001", "str-003"],
-      "threshold": 0.82
-    }
-  ]
-}</code></pre>
-            </div>
-          </div>
-
-          <div class="reveal mt-12">
-            <h3 style="margin-bottom:var(--space-6);">Production Implementations</h3>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>System</th>
-                    <th>ACE Implementation</th>
-                    <th>Accuracy Gain</th>
-                    <th>Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Stanford / SambaNova Deep Research</td>
-                    <td>Full ACE loop with Curator-driven Playbook evolution</td>
-                    <td>82% (from 61% baseline)</td>
-                    <td>ACE-open, arXiv:2510.04618</td>
-                  </tr>
-                  <tr>
-                    <td>KayBA Agentic Context Engine</td>
-                    <td>Generator-Reflector with domain-specific Curators</td>
-                    <td>67% reduction in hallucinations</td>
-                    <td>github.com/kayba-ai/agentic-context-engine</td>
-                  </tr>
-                  <tr>
-                    <td>HumanLayer ACE-FCA</td>
-                    <td>Reflector uses human-in-the-loop for high-stakes decisions</td>
-                    <td>94% human approval rate</td>
-                    <td>HumanLayer production systems</td>
-                  </tr>
-                  <tr>
-                    <td>SafiaTifour Multi-Domain ACE</td>
-                    <td>Per-domain Playbooks with cross-domain transfer learning</td>
-                    <td>3.2x faster convergence</td>
-                    <td>github.com/SafiaTifour/agentic-context-engineering</td>
-                  </tr>
-                  <tr>
-                    <td>Generic Enterprise (Baseline)</td>
-                    <td>Static prompt with no feedback loop</td>
-                    <td>Baseline</td>
-                    <td>Industry standard</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="reveal mt-12 callout-box">
-            <p class="stat-value" style="font-size:var(--text-xl);" data-count="82" data-suffix="%"><span class="counter-display">0%</span><noscript>82%</noscript></p>
-            <p style="font-size:var(--text-lg); color:var(--color-text); margin-top:var(--space-2);">Accuracy on complex QA, up from 61% baseline</p>
-            <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-top:var(--space-2);">Stanford / SambaNova Deep Research Agent — ACE-open, arXiv:2510.04618</p>
-          </div>
+          <p class="source-footnote reveal">Source: ACE-open, arXiv:2510.04618 — 82% accuracy on complex QA (from 61% baseline)</p>
         </div>
       </section>
 
@@ -491,119 +858,16 @@
       <!-- MEMORY -->
       <section id="memory">
         <div class="container">
-          <p class="section-eyebrow">Section 04</p>
+          <p class="section-eyebrow">Advanced</p>
           <h2 class="section-title">Memory Architectures</h2>
-          <p class="section-intro">How agentic systems remember, forget, and compress experience into reusable knowledge.</p>
-
-          <div class="reveal">
-            <h3 style="margin-bottom:var(--space-6);">The 4 Memory Types</h3>
-            <div class="grid-4" style="gap:var(--space-6);">
-              <div class="card reveal">
-                <p class="card-meta">Type 01</p>
-                <h3 class="card-title">Working Memory</h3>
-                <div class="card-body">
-                  <p><strong>Storage:</strong> LLM context window (in-token)</p>
-                  <p><strong>Persistence:</strong> Ephemeral — lasts one inference</p>
-                  <p><strong>Best use:</strong> Active reasoning, tool outputs, user query context</p>
-                </div>
-              </div>
-
-              <div class="card reveal">
-                <p class="card-meta">Type 02</p>
-                <h3 class="card-title">Episodic Memory</h3>
-                <div class="card-body">
-                  <p><strong>Storage:</strong> Vector database + metadata index</p>
-                  <p><strong>Persistence:</strong> Session-scoped with decay</p>
-                  <p><strong>Best use:</strong> Recent conversation history, task-specific context</p>
-                </div>
-              </div>
-
-              <div class="card reveal">
-                <p class="card-meta">Type 03</p>
-                <h3 class="card-title">Semantic Memory</h3>
-                <div class="card-body">
-                  <p><strong>Storage:</strong> Structured Playbook (JSON/YAML)</p>
-                  <p><strong>Persistence:</strong> Persistent, versioned</p>
-                  <p><strong>Best use:</strong> Patterns, anti-patterns, format rules, heuristics</p>
-                </div>
-              </div>
-
-              <div class="card reveal">
-                <p class="card-meta">Type 04</p>
-                <h3 class="card-title">Procedural Memory</h3>
-                <div class="card-body">
-                  <p><strong>Storage:</strong> Code / workflow definitions</p>
-                  <p><strong>Persistence:</strong> Immutable, deployed</p>
-                  <p><strong>Best use:</strong> Tool implementations, routing logic, validation rules</p>
-                </div>
-              </div>
-            </div>
+          <p class="section-intro">Working, episodic, semantic, and procedural memory — with hybrid retrieval and compression rules.</p>
+          <div class="reveal grid-4" style="gap:var(--space-6);">
+            <div class="card"><p class="card-meta">Type 01</p><h3 class="card-title">Working Memory</h3><div class="card-body"><p>Context window — ephemeral, one inference.</p></div></div>
+            <div class="card"><p class="card-meta">Type 02</p><h3 class="card-title">Episodic Memory</h3><div class="card-body"><p>Vector DB + decay — session-scoped.</p></div></div>
+            <div class="card"><p class="card-meta">Type 03</p><h3 class="card-title">Semantic Memory</h3><div class="card-body"><p>Playbook patterns — persistent, versioned.</p></div></div>
+            <div class="card"><p class="card-meta">Type 04</p><h3 class="card-title">Procedural Memory</h3><div class="card-body"><p>Code/workflows — immutable, deployed.</p></div></div>
           </div>
-
-          <div class="reveal mt-12">
-            <h3 style="margin-bottom:var(--space-6);">Architecture Comparison</h3>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Dimension</th>
-                    <th>HEM (HiAgent)</th>
-                    <th>RAMN (LangMem)</th>
-                    <th>CCM (Custom)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Storage</td>
-                    <td>Hierarchical graph DB</td>
-                    <td>Vector DB + KV store</td>
-                    <td>Hybrid (graph + vector)</td>
-                  </tr>
-                  <tr>
-                    <td>Retrieval Speed</td>
-                    <td>Fast (pre-computed paths)</td>
-                    <td>Medium (vector search)</td>
-                    <td>Configurable</td>
-                  </tr>
-                  <tr>
-                    <td>Scalability</td>
-                    <td>High (sharded graphs)</td>
-                    <td>Very High (flat vectors)</td>
-                    <td>Medium (custom ops)</td>
-                  </tr>
-                  <tr>
-                    <td>Context Coherence</td>
-                    <td>Excellent (hierarchical)</td>
-                    <td>Good (semantic similarity)</td>
-                    <td>Domain-dependent</td>
-                  </tr>
-                  <tr>
-                    <td>Context Rot Risk</td>
-                    <td>Low (structured decay)</td>
-                    <td>Medium (flat retrieval)</td>
-                    <td>Low (custom eviction)</td>
-                  </tr>
-                  <tr>
-                    <td>Best For</td>
-                    <td>Multi-step reasoning, planning</td>
-                    <td>Large-scale retrieval, RAG</td>
-                    <td>Specialized domains</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="reveal mt-12">
-            <h3 style="margin-bottom:var(--space-6);">The 5-Rule Production Hybrid</h3>
-            <ol class="numbered-list">
-              <li><strong>Never store raw transcripts.</strong> Compression into semantic patterns is mandatory. Raw logs consume storage, dilute retrieval, and leak irrelevant detail. Reason: the compression layer extracts the invariant rule from the variable instance.</li>
-              <li><strong>Episodic memory decays by half-life.</strong> Set a decay function where recency and importance determine survival. A memory from 30 days ago with low importance should be evicted. Reason: prevents stale context from dominating retrieval.</li>
-              <li><strong>Semantic patterns are pinned, not evicted.</strong> Playbook entries (patterns, anti-patterns, format rules) are curated knowledge and persist until explicitly deprecated. Reason: institutional knowledge must survive session boundaries.</li>
-              <li><strong>Use hybrid retrieval: vector + temporal + importance.</strong> Pure vector similarity retrieves semantically similar but temporally irrelevant memories. Combine cosine similarity with recency decay and importance weighting. Reason: a memory from yesterday about a critical bug is more relevant than a similar memory from 6 months ago.</li>
-              <li><strong>Compress before storing, not after retrieval.</strong> Compression at write-time ensures retrieval operates on compact, high-signal patterns. Compression at read-time wastes compute and introduces latency. Reason: retrieval is the hot path; compression is the cold path.</li>
-            </ol>
-          </div>
+          <p class="source-footnote reveal">Source: Context Engineering patterns; <em>anthropic_ultimate_guide.md</em></p>
         </div>
       </section>
 
@@ -612,82 +876,22 @@
       <!-- MULTI-AGENT -->
       <section id="multi-agent">
         <div class="container">
-          <p class="section-eyebrow">Section 05</p>
+          <p class="section-eyebrow">Advanced</p>
           <h2 class="section-title">Multi-Agent Orchestration</h2>
-          <p class="section-intro">How to structure teams of agents so that context isolation, routing, and coordination produce emergent capability — not emergent chaos.</p>
-
-          <div class="reveal">
-            <h3 style="margin-bottom:var(--space-6);">Orchestration Pattern Comparison</h3>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Dimension</th>
-                    <th>Supervisor</th>
-                    <th>Hierarchical</th>
-                    <th>Specialized Swarm</th>
-                    <th>Peer-to-Peer</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Topology</td>
-                    <td>Star — one router, many workers</td>
-                    <td>Tree — levels of delegation</td>
-                    <td>Mesh — all peers, broadcast</td>
-                    <td>Graph — dynamic edges</td>
-                  </tr>
-                  <tr>
-                    <td>Context Isolation Quality</td>
-                    <td>High (router isolates each worker)</td>
-                    <td>High (each level isolates below)</td>
-                    <td>Medium (shared broadcast channel)</td>
-                    <td>Low (shared graph state)</td>
-                  </tr>
-                  <tr>
-                    <td>Context Rot Risk</td>
-                    <td>Low (short worker chains)</td>
-                    <td>Medium (deep trees accumulate)</td>
-                    <td>High (many parallel streams)</td>
-                    <td>High (shared state pollution)</td>
-                  </tr>
-                  <tr>
-                    <td>Best Use Case</td>
-                    <td>Task routing with clear domains</td>
-                    <td>Complex planning with sub-goals</td>
-                    <td>Parallel processing, voting</td>
-                    <td>Collaborative editing, consensus</td>
-                  </tr>
-                  <tr>
-                    <td>Scalability</td>
-                    <td>Medium (router bottleneck)</td>
-                    <td>High (shards per branch)</td>
-                    <td>Very High (embarrassingly parallel)</td>
-                    <td>Low (coordination overhead)</td>
-                  </tr>
-                  <tr>
-                    <td>When to Choose</td>
-                    <td>Clear task taxonomy exists</td>
-                    <td>Tasks decompose hierarchically</td>
-                    <td>Speed &gt; consistency</td>
-                    <td>Consensus needed, low throughput</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <p class="section-intro">Context isolation, routing, and coordination — emergent capability, not emergent chaos.</p>
+          <div class="reveal table-wrapper">
+            <table>
+              <thead><tr><th>Pattern</th><th>Isolation</th><th>Best For</th></tr></thead>
+              <tbody>
+                <tr><td>Supervisor (star)</td><td>High</td><td>Clear task taxonomy</td></tr>
+                <tr><td>Hierarchical (tree)</td><td>High</td><td>Complex planning with sub-goals</td></tr>
+                <tr><td>Specialized swarm</td><td>Medium</td><td>Parallel processing, speed &gt; consistency</td></tr>
+                <tr><td>Peer-to-peer</td><td>Low</td><td>Consensus, collaborative editing</td></tr>
+              </tbody>
+            </table>
           </div>
-
-          <div class="reveal mt-12">
-            <h3 style="margin-bottom:var(--space-6);">The 5 Universal Context Scoping Rules</h3>
-            <p style="margin-bottom:var(--space-6); max-width:72ch;">Before dispatching any task to a sub-agent, verify all five rules are satisfied. This checklist prevents 80% of multi-agent context failures.</p>
-            <ol class="numbered-list">
-              <li><strong>One capability per agent.</strong> Each agent has a single, well-defined capability. An agent that both writes code and designs UIs will conflate constraints from both domains. Reason: context isolation requires narrow scope.</li>
-              <li><strong>Never pass the parent's full context.</strong> Extract and pass only the relevant subset. The parent may know 50 facts; the child needs 3. Reason: distractor interference scales with context size (arXiv:2307.03172).</li>
-              <li><strong>Define the handoff format explicitly.</strong> Specify schema, required fields, and validation rules for data passed between agents. Reason: implicit handoffs cause schema mismatches that cascade.</li>
-              <li><strong>Enforce a maximum chain depth.</strong> Beyond 3 levels of delegation, context rot dominates signal. Flatten deep hierarchies into wider supervisor-worker structures. Reason: each handoff introduces ~5% context fidelity loss.</li>
-              <li><strong>Log every handoff with context fingerprint.</strong> Record which context subset was passed, to which agent, and at what time. When failures occur, replay the exact context that caused the error. Reason: without replay capability, multi-agent debugging is intractable.</li>
-            </ol>
-          </div>
+          <p class="reveal" style="margin-top:var(--space-6); max-width:72ch;">Before dispatching to sub-agents: one capability per agent, never pass full parent context, define handoff schema explicitly, max chain depth 3, log context fingerprints.</p>
+          <p class="source-footnote reveal">Source: Anthropic multi-agent research — 90.2% accuracy improvement via context isolation</p>
         </div>
       </section>
 
@@ -696,9 +900,9 @@
       <!-- BLUEPRINT -->
       <section id="blueprint">
         <div class="container">
-          <p class="section-eyebrow">Section 06</p>
-          <h2 class="section-title">The Ultimate Prompt Generator</h2>
-          <p class="section-intro">Build a production-ready system prompt by filling in each of the five context layers. The generator assembles them into a structured prompt you can paste directly into your agent.</p>
+          <p class="section-eyebrow">Advanced</p>
+          <h2 class="section-title">Advanced: Stratified Context Builder</h2>
+          <p class="section-intro">Build a production-ready system prompt by filling in each of the five context layers. The 5-layer generator assembles structured prompts for agent deployments. For API single-shot tasks, use the <a href="#tool-10point-builder">10-Point Builder</a> instead.</p>
 
           <div class="reveal">
             <form id="promptForm" novalidate>
@@ -876,8 +1080,8 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-content">
-      <p><small>Context Engineering Reference — 2026</small></p>
-      <p><small>Built for precision, not persuasion.</small></p>
+      <p><small>The Agentic Practitioner Playbook — 2026</small></p>
+      <p><small>Context Engineering · Prompting · Claude Code · Production Agents</small></p>
     </div>
   </footer>
 

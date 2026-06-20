@@ -656,7 +656,7 @@
   /* ========== Hero Typing Effect ========== */
   var heroHeadline = document.getElementById('heroHeadline');
   if (heroHeadline && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var fullText = 'Context Engineering for Agentic Systems';
+    var fullText = 'The Agentic Practitioner Playbook';
     var cursor = heroHeadline.querySelector('.typing-cursor');
     heroHeadline.textContent = '';
     if (cursor) heroHeadline.appendChild(cursor);
@@ -937,6 +937,66 @@
     'human-in-the-loop': {
       def: 'A design where an AI pauses and asks a real person for approval before taking a high-stakes action. Like a self-driving car that slows down and hands control to the driver when it\'s unsure.',
       see: ['agentic system', 'corrective rag', 'retrieval threshold']
+    },
+    'routines': {
+      def: 'Preconfigured Claude Code session templates that run on a schedule or event trigger — a higher-order prompt that automates recurring work like doc maintenance, CI fixes, or deploy verification.',
+      see: ['claude code', 'hooks', 'trigger']
+    },
+    'hooks': {
+      def: 'Lifecycle callbacks in agent harnesses that fire before or after tool calls, MCP execution, or session events — used for governance, validation, and policy enforcement.',
+      see: ['routines', 'mcp', 'claude code']
+    },
+    'claude code': {
+      def: 'Anthropic\'s agentic terminal coding assistant. Runs in a loop with bash, file edits, and MCP tools. Supports CLAUDE.md project memory, routines, and verification loops.',
+      see: ['claude.md', 'routines', 'mcp']
+    },
+    'claude.md': {
+      def: 'Project-level memory file read automatically at session start. Stores architecture notes, commands, style guides, and MCP config. Keep it short — long files eat context without proportional benefit.',
+      see: ['claude code', 'system prompt', 'skills']
+    },
+    'skills': {
+      def: 'Composable, on-demand context packages the model pulls in when a task needs them — domain procedures, formatting rules, specialized knowledge. Unlike system prompts, skills load only when relevant.',
+      see: ['claude.md', 'system prompt', 'just-in-time loading']
+    },
+    'mcp': {
+      def: 'Model Context Protocol — a standard for wrapping external systems (GitHub, Slack, databases) as tools agents can call. MCP servers expose capabilities without custom integration per service.',
+      see: ['tools', 'claude code', 'hooks']
+    },
+    'hill climbing': {
+      def: 'The eval improvement loop: run tests, diagnose failures by theme, make one architectural fix, re-run, repeat. Used to recover performance when agents decay from complexity bloat.',
+      see: ['regression eval', 'failure mode eval', 'reflector']
+    },
+    'regression eval': {
+      def: 'Single-turn eval tasks with defined correct responses — tests that the agent still does what it used to after changes. The "did we break anything?" suite.',
+      see: ['failure mode eval', 'hill climbing']
+    },
+    'failure mode eval': {
+      def: 'Multi-turn eval tasks that probe specific known weaknesses — inefficient paths, subagent communication breakdowns, policy conflicts in long system prompts.',
+      see: ['regression eval', 'hill climbing', 'sub-agent']
+    },
+    'context poisoning': {
+      def: 'When retrieved documents contain instructions or content that hijacks model behavior — the model follows injected directives from untrusted sources instead of your system prompt.',
+      see: ['RAG', 'retrieval threshold', 'corrective rag']
+    },
+    'lost in the middle': {
+      def: 'Attention degradation where content buried in positions 30–70% of a long context is systematically underweighted. Never place critical facts in the middle zone.',
+      see: ['injection ordering', 'context window', 'attention dilution']
+    },
+    'injection ordering': {
+      def: 'The deliberate sequence of what enters the context window — primacy zone for constraints, middle for background, recency zone for highest-signal retrieved content.',
+      see: ['context engineering', 'lost in the middle', 'token budget']
+    },
+    'workflow': {
+      def: 'Multiple models operating in a predefined control flow you mapped explicitly. Cheaper and more predictable than agents when the decision tree is tractable.',
+      see: ['agent', 'agentic system', 'semantic routing']
+    },
+    'stock pilot': {
+      def: 'Anthropic\'s workshop inventory agent demonstrating architecture decay — a 400-line system prompt and bolted-on subagents dropped eval pass rates from 83% to 62%.',
+      see: ['sub-agent', 'skills', 'hill climbing']
+    },
+    'hill-climbing': {
+      def: 'Same as hill climbing — the eval improvement loop of diagnose-by-theme, fix architecture, re-run.',
+      see: ['hill climbing', 'regression eval', 'failure mode eval']
     }
   };
 
@@ -1175,6 +1235,347 @@
           jargonPanel.setAttribute('aria-hidden', 'true');
         }
       }
+    });
+  }
+
+  /* ========== Prompt Before/After Toggle ========== */
+  document.querySelectorAll('.toggle-btn[data-prompt-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.getAttribute('data-prompt-toggle');
+      document.querySelectorAll('.toggle-btn[data-prompt-toggle]').forEach(function (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      document.querySelectorAll('.prompt-compare').forEach(function (panel) {
+        panel.classList.toggle('hidden', panel.getAttribute('data-prompt-version') !== target);
+      });
+    });
+  });
+
+  /* ========== Tool A: Agent Suitability Wizard ========== */
+  function scoreWizard() {
+    var complexity = parseInt(document.getElementById('wizComplexity').value, 10);
+    var value = parseInt(document.getElementById('wizValue').value, 10);
+    var bottlenecks = parseInt(document.getElementById('wizBottlenecks').value, 10);
+    var errorCost = parseInt(document.getElementById('wizErrorCost').value, 10);
+
+    var agentScore = 0;
+    var workflowScore = 0;
+    var rationale = [];
+
+    if (complexity >= 4) { agentScore += 3; rationale.push('High ambiguity favors agentic exploration.'); }
+    else if (complexity <= 2) { workflowScore += 3; rationale.push('Tractable decision tree — map it explicitly.'); }
+    else { agentScore += 1; workflowScore += 1; rationale.push('Moderate complexity — hybrid may work.'); }
+
+    if (value >= 4) { agentScore += 3; rationale.push('High task value justifies token spend.'); }
+    else if (value <= 2) { workflowScore += 3; rationale.push('Low unit economics favor deterministic workflows.'); }
+    else { agentScore += 1; workflowScore += 1; }
+
+    if (bottlenecks >= 4) { workflowScore += 2; rationale.push('Critical capability gaps — simplify scope first.'); }
+    else if (bottlenecks <= 2) { agentScore += 2; rationale.push('Core capabilities are derisked.'); }
+
+    if (errorCost >= 4) { workflowScore += 3; rationale.push('High-stakes errors demand human-in-the-loop or read-only modes.'); }
+    else if (errorCost <= 2) { agentScore += 2; rationale.push('Outputs are verifiable — agent autonomy is safer.'); }
+
+    var recommendation;
+    if (agentScore > workflowScore + 2) recommendation = 'Agent';
+    else if (workflowScore > agentScore + 2) recommendation = 'Workflow';
+    else recommendation = 'Hybrid';
+
+    var descriptions = {
+      'Agent': 'Build an agent: model + tools in a loop with environment feedback. Best when ambiguity is high, value justifies tokens, capabilities are proven, and outputs are verifiable.',
+      'Workflow': 'Build a workflow: predefined control flow with explicit nodes. Best when you can enumerate the decision tree, unit economics are tight, or error cost is high.',
+      'Hybrid': 'Start with a workflow for modal cases; escalate edge cases to a scoped agent with verification. Captures most value without full autonomy cost.'
+    };
+
+    var out = document.getElementById('wizardOutput');
+    if (!out) return;
+    out.textContent = '';
+    var h4 = document.createElement('h4');
+    h4.textContent = 'Recommendation: ' + recommendation;
+    out.appendChild(h4);
+    var p = document.createElement('p');
+    p.textContent = descriptions[recommendation];
+    out.appendChild(p);
+    var p2 = document.createElement('p');
+    p2.style.marginTop = 'var(--space-3)';
+    var strong = document.createElement('strong');
+    strong.textContent = 'Rationale:';
+    p2.appendChild(strong);
+    out.appendChild(p2);
+    var ul = document.createElement('ul');
+    ul.style.marginLeft = 'var(--space-4)';
+    rationale.forEach(function (r) {
+      var li = document.createElement('li');
+      li.textContent = r;
+      ul.appendChild(li);
+    });
+    out.appendChild(ul);
+    out.style.display = 'block';
+    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  var wizardForm = document.getElementById('wizardForm');
+  if (wizardForm) {
+    wizardForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      scoreWizard();
+    });
+    ['wizComplexity', 'wizValue', 'wizBottlenecks', 'wizErrorCost'].forEach(function (id) {
+      var el = document.getElementById(id);
+      var label = document.getElementById(id + 'Val');
+      if (el && label) {
+        el.addEventListener('input', function () {
+          var labels = ['Very Low', 'Low', 'Moderate', 'High', 'Very High'];
+          label.textContent = labels[parseInt(el.value, 10) - 1];
+        });
+      }
+    });
+  }
+
+  /* ========== Tool B: Context Budget Auditor ========== */
+  var BUDGET_LIMITS = {
+    system: 10,
+    task: 15,
+    retrieved: 40,
+    working: 20,
+    output: 15
+  };
+
+  function runBudgetAudit() {
+    var total = parseInt(document.getElementById('auditTotal').value, 10) || 200000;
+    var mode = document.getElementById('auditMode').value;
+    var categories = ['system', 'task', 'retrieved', 'working', 'output'];
+    var names = {
+      system: 'System prompt + skills',
+      task: 'Task definition + few-shot',
+      retrieved: 'Retrieved documents',
+      working: 'Working state / scratchpad',
+      output: 'Output buffer'
+    };
+    var tokens = {};
+    var pcts = {};
+    var lines = ['CONTEXT AUDIT REPORT', '========================', 'Total budget: ' + total.toLocaleString() + ' tokens', ''];
+
+    categories.forEach(function (cat) {
+      if (mode === 'percent') {
+        pcts[cat] = parseFloat(document.getElementById('audit_' + cat).value) || 0;
+        tokens[cat] = Math.round(total * pcts[cat] / 100);
+      } else {
+        tokens[cat] = parseInt(document.getElementById('audit_' + cat).value, 10) || 0;
+        pcts[cat] = total > 0 ? (tokens[cat] / total) * 100 : 0;
+      }
+    });
+
+    var sumPct = categories.reduce(function (s, c) { return s + pcts[c]; }, 0);
+    lines.push('ALLOCATION SUMMARY');
+    lines.push('------------------');
+
+    var flags = 0;
+    categories.forEach(function (cat) {
+      var limit = BUDGET_LIMITS[cat];
+      var over = pcts[cat] > limit;
+      if (over) flags++;
+      var flag = over ? ' *** OVER LIMIT (max ' + limit + '%) ***' : ' [OK]';
+      lines.push(names[cat] + ': ' + tokens[cat].toLocaleString() + ' tokens (' + pcts[cat].toFixed(1) + '%)' + flag);
+    });
+
+    lines.push('');
+    lines.push('Total allocated: ' + sumPct.toFixed(1) + '%');
+    if (sumPct > 100) {
+      lines.push('*** WARNING: Allocation exceeds 100% — silent truncation likely ***');
+      flags++;
+    } else if (sumPct < 95) {
+      lines.push('Note: ' + (100 - sumPct).toFixed(1) + '% unallocated — reserve for dynamic expansion.');
+    }
+
+    lines.push('');
+    lines.push('INJECTION ORDER CHECK');
+    lines.push('---------------------');
+    lines.push('[ ] Retrieved content ordered by relevance (best at recency zone)');
+    lines.push('[ ] Critical constraints in primacy zone (first ~10%)');
+    lines.push('[ ] Poisoning detection on retrieved content');
+    lines.push('[ ] Output buffer reserved (never 0%)');
+
+    lines.push('');
+    lines.push('FLAGS: ' + flags + ' issue(s) detected');
+    if (flags === 0) lines.push('Status: PASS — allocation within standard limits');
+
+    var out = document.getElementById('auditOutput');
+    var pre = document.getElementById('auditReport');
+    if (out && pre) {
+      pre.textContent = lines.join('\n');
+      out.style.display = 'block';
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  var auditForm = document.getElementById('auditForm');
+  if (auditForm) {
+    auditForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      runBudgetAudit();
+    });
+    var auditMode = document.getElementById('auditMode');
+    if (auditMode) {
+      auditMode.addEventListener('change', function () {
+        var isPct = auditMode.value === 'percent';
+        document.querySelectorAll('.audit-input-group').forEach(function (g) {
+          g.querySelector('.audit-pct-label').style.display = isPct ? '' : 'none';
+          g.querySelector('.audit-token-label').style.display = isPct ? 'none' : '';
+        });
+      });
+    }
+  }
+
+  /* ========== Tool C: 10-Point Prompt Builder ========== */
+  function generate10Point() {
+    var fields = {
+      taskContext: 'p10_taskContext',
+      toneContext: 'p10_toneContext',
+      background: 'p10_background',
+      dynamic: 'p10_dynamic',
+      steps: 'p10_steps',
+      examples: 'p10_examples',
+      history: 'p10_history',
+      reminder: 'p10_reminder',
+      guardrails: 'p10_guardrails',
+      outputFormat: 'p10_outputFormat',
+      prefill: 'p10_prefill'
+    };
+    function v(id) {
+      var el = document.getElementById(id);
+      return el && el.value ? el.value.trim() : '';
+    }
+    function block(tag, content) {
+      if (!content) return '';
+      return '<' + tag + '>\n' + content + '\n</' + tag + '>\n\n';
+    }
+
+    var prompt = block('task_context', v(fields.taskContext))
+      + block('tone_context', v(fields.toneContext))
+      + block('background_data', v(fields.background))
+      + block('dynamic_content', v(fields.dynamic))
+      + block('instructions', v(fields.steps))
+      + block('examples', v(fields.examples))
+      + block('conversation_history', v(fields.history))
+      + block('task_reminder', v(fields.reminder))
+      + block('guardrails', v(fields.guardrails))
+      + block('output_format', v(fields.outputFormat));
+
+    var prefill = v(fields.prefill);
+    if (prefill) prompt += '\n<!-- Pre-fill assistant turn with: ' + prefill + ' -->';
+
+    var out = document.getElementById('p10Output');
+    var code = document.getElementById('p10Generated');
+    if (out && code) {
+      var codeEl = code.querySelector('code');
+      if (codeEl) codeEl.textContent = prompt.trim() || '(Fill in at least one field)';
+      out.style.display = 'block';
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function prefill10Point() {
+    var samples = {
+      p10_taskContext: 'You are an expert Swedish auto insurance claims adjuster reviewing car accident report forms and sketches.',
+      p10_toneContext: 'Stay factual and confident. If you cannot clearly read the form or sketch, say so — do not guess.',
+      p10_background: 'The form has 17 checkbox rows across two vehicle columns (A and B). Humans may circle, scribble, or mark imperfectly.',
+      p10_dynamic: '[Attach accident form image and sketch image here]',
+      p10_steps: '1. Examine the form carefully — list all checked boxes for vehicle A and B.\n2. Examine the sketch in light of form findings.\n3. Reconcile both sources and determine fault with evidence.',
+      p10_guardrails: 'Do not hallucinate. Base every claim on visible evidence. Admit uncertainty when information is insufficient.',
+      p10_outputFormat: 'Return XML with <form_analysis>, <sketch_analysis>, and <final_verdict> sections.',
+      p10_prefill: '<form_analysis>'
+    };
+    Object.keys(samples).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = samples[id];
+    });
+  }
+
+  var p10Form = document.getElementById('p10Form');
+  if (p10Form) {
+    p10Form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      generate10Point();
+    });
+  }
+  var p10PrefillBtn = document.getElementById('p10PrefillBtn');
+  if (p10PrefillBtn) p10PrefillBtn.addEventListener('click', prefill10Point);
+
+  var copyP10Btn = document.getElementById('copyP10Btn');
+  if (copyP10Btn) {
+    copyP10Btn.addEventListener('click', function () {
+      var code = document.getElementById('p10Generated');
+      if (!code) return;
+      var codeEl = code.querySelector('code');
+      if (codeEl) copyToClipboard(codeEl.textContent, copyP10Btn);
+    });
+  }
+
+  var copyAuditBtn = document.getElementById('copyAuditBtn');
+  if (copyAuditBtn) {
+    copyAuditBtn.addEventListener('click', function () {
+      var pre = document.getElementById('auditReport');
+      if (pre) copyToClipboard(pre.textContent, copyAuditBtn);
+    });
+  }
+
+  /* ========== Tool D: Routine Designer ========== */
+  function generateRoutine() {
+    var name = (document.getElementById('routineName').value || 'my-routine').trim();
+    var triggerType = document.getElementById('routineTriggerType').value;
+    var triggerDetail = document.getElementById('routineTriggerDetail').value.trim();
+    var repos = document.getElementById('routineRepos').value.trim();
+    var connectors = document.getElementById('routineConnectors').value.trim();
+    var steering = document.getElementById('routineSteering').value;
+    var instructions = document.getElementById('routineInstructions').value.trim();
+
+    var triggerLine = triggerType === 'schedule'
+      ? '/schedule ' + (triggerDetail || '0 9 * * 1') + ' — ' + name
+      : 'Event: ' + (triggerDetail || 'webhook/post-deploy');
+
+    var md = '# Routine: ' + name + '\n\n'
+      + '## Trigger\n'
+      + '- Type: ' + triggerType + '\n'
+      + '- Config: ' + triggerLine + '\n\n'
+      + '## Context\n'
+      + '- Repos: ' + (repos || 'main app repo') + '\n'
+      + '- Connectors: ' + (connectors || 'GitHub') + '\n\n'
+      + '## Steering\n'
+      + '- Pattern: ' + steering + '\n\n'
+      + '## Instructions\n\n'
+      + (instructions || 'Describe the routine role and success criteria here.') + '\n\n'
+      + '## Example Command\n\n'
+      + '```\n' + triggerLine + '\n```\n';
+
+    var out = document.getElementById('routineOutput');
+    var code = document.getElementById('routineGenerated');
+    if (out && code) {
+      var codeEl = code.querySelector('code');
+      if (codeEl) codeEl.textContent = md;
+      out.style.display = 'block';
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  var routineForm = document.getElementById('routineForm');
+  if (routineForm) {
+    routineForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      generateRoutine();
+    });
+  }
+
+  var copyRoutineBtn = document.getElementById('copyRoutineBtn');
+  if (copyRoutineBtn) {
+    copyRoutineBtn.addEventListener('click', function () {
+      var code = document.getElementById('routineGenerated');
+      if (!code) return;
+      var codeEl = code.querySelector('code');
+      if (codeEl) copyToClipboard(codeEl.textContent, copyRoutineBtn);
     });
   }
 
