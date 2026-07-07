@@ -7,64 +7,80 @@
   'use strict';
 
   /* ---------- Provider registry ---------- */
+  var ZEN_BASE = 'https://opencode.ai/zen/v1';
+
   var PROVIDERS = {
     google: {
       label: 'Google Gemini',
-      models: ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash'],
-      defaultModel: 'gemini-2.5-flash',
+      models: ['gemini-3.5-flash', 'gemini-3.1-pro', 'gemini-3-flash'],
+      defaultModel: 'gemini-3.5-flash',
       needsBaseUrl: false,
-      call: function (cfg, systemPrompt, userPrompt) {
+      keyPlaceholder: 'AIza…',
+      keyLink: 'https://aistudio.google.com/apikey',
+      keyLinkText: 'Get a Google API key →',
+      testUrl: function (key) {
+        return 'https://generativelanguage.googleapis.com/v1beta/models?key=' + encodeURIComponent(key);
+      },
+      testHeaders: function () { return {}; },
+      call: function (cfg, systemPrompt, userPrompt, useJsonMode) {
         var url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
           encodeURIComponent(cfg.model) + ':generateContent?key=' + encodeURIComponent(cfg.apiKey);
+        var genCfg = { temperature: 0.7, maxOutputTokens: 8192 };
+        if (useJsonMode) genCfg.responseMimeType = 'application/json';
         var body = {
           contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
           systemInstruction: { parts: [{ text: systemPrompt }] },
-          generationConfig: {
-            responseMimeType: 'application/json',
-            temperature: 0.7,
-            maxOutputTokens: 8192
-          }
+          generationConfig: genCfg
         };
         return fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         }).then(function (r) {
-          if (!r.ok) return r.text().then(function (t) { throw new Error('Gemini ' + r.status + ': ' + t.slice(0, 300)); });
+          if (!r.ok) return r.text().then(function (t) { throw new Error('Gemini ' + r.status + ': ' + t.slice(0, 400)); });
           return r.json();
         }).then(function (data) {
-          var text = (((data.candidates || [])[0] || {}).content || {}).parts
-            ? data.candidates[0].content.parts.map(function (p) { return p.text || ''; }).join('')
-            : '';
-          if (!text) throw new Error('Gemini returned empty response');
+          var c = (data.candidates || [])[0] || {};
+          var parts = (c.content || {}).parts || [];
+          var text = parts.map(function (p) { return p.text || ''; }).join('');
+          if (!text) {
+            var bl = (c.finishReason || '');
+            throw new Error('Gemini returned no text' + (bl ? ' (finishReason: ' + bl + ')' : ''));
+          }
           return text;
         });
       }
     },
     openai: {
       label: 'OpenAI',
-      models: ['gpt-4o', 'gpt-4o-mini', 'gpt-4.1', 'o3-mini'],
-      defaultModel: 'gpt-4o',
+      models: ['gpt-5.5', 'gpt-5.4', 'gpt-5.4-mini', 'gpt-5.4-nano', 'gpt-5.3-codex'],
+      defaultModel: 'gpt-5.4',
       needsBaseUrl: false,
-      call: function (cfg, systemPrompt, userPrompt) {
+      keyPlaceholder: 'sk-…',
+      keyLink: 'https://platform.openai.com/api-keys',
+      keyLinkText: 'Get an OpenAI API key →',
+      testUrl: function () { return 'https://api.openai.com/v1/models'; },
+      testHeaders: function (key) { return { 'Authorization': 'Bearer ' + key }; },
+      call: function (cfg, systemPrompt, userPrompt, useJsonMode) {
+        var body = {
+          model: cfg.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 8192
+        };
+        if (useJsonMode) body.response_format = { type: 'json_object' };
         return fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + cfg.apiKey
           },
-          body: JSON.stringify({
-            model: cfg.model,
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt }
-            ],
-            response_format: { type: 'json_object' },
-            temperature: 0.7,
-            max_tokens: 8192
-          })
+          body: JSON.stringify(body)
         }).then(function (r) {
-          if (!r.ok) return r.text().then(function (t) { throw new Error('OpenAI ' + r.status + ': ' + t.slice(0, 300)); });
+          if (!r.ok) return r.text().then(function (t) { throw new Error('OpenAI ' + r.status + ': ' + t.slice(0, 400)); });
           return r.json();
         }).then(function (data) {
           var text = (((data.choices || [])[0] || {}).message || {}).content || '';
@@ -74,32 +90,76 @@
       }
     },
     opencode: {
-      label: 'OpenCode / Custom',
-      models: [],
+      label: 'OpenCode Zen',
+      models: ['glm-5.2', 'deepseek-v4-flash', 'deepseek-v4-pro', 'kimi-k2.7-code', 'minimax-m3', 'big-pickle'],
       defaultModel: 'glm-5.2',
-      needsBaseUrl: true,
-      call: function (cfg, systemPrompt, userPrompt) {
-        var base = (cfg.baseUrl || '').replace(/\/+$/, '');
-        if (!base) throw new Error('Base URL required for custom provider');
-        var url = base + '/chat/completions';
-        return fetch(url, {
+      needsBaseUrl: false,
+      hardcodedBase: ZEN_BASE,
+      keyPlaceholder: 'ocz_…',
+      keyLink: 'https://opencode.ai/auth',
+      keyLinkText: 'Get an OpenCode Zen API key →',
+      testUrl: function () { return ZEN_BASE + '/models'; },
+      testHeaders: function (key) { return { 'Authorization': 'Bearer ' + key }; },
+      call: function (cfg, systemPrompt, userPrompt, useJsonMode) {
+        var body = {
+          model: cfg.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 8192
+        };
+        if (useJsonMode) body.response_format = { type: 'json_object' };
+        return fetch(ZEN_BASE + '/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + cfg.apiKey
           },
-          body: JSON.stringify({
-            model: cfg.model,
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt }
-            ],
-            response_format: { type: 'json_object' },
-            temperature: 0.7,
-            max_tokens: 8192
-          })
+          body: JSON.stringify(body)
         }).then(function (r) {
-          if (!r.ok) return r.text().then(function (t) { throw new Error('Custom ' + r.status + ': ' + t.slice(0, 300)); });
+          if (!r.ok) return r.text().then(function (t) { throw new Error('OpenCode Zen ' + r.status + ': ' + t.slice(0, 400)); });
+          return r.json();
+        }).then(function (data) {
+          var text = (((data.choices || [])[0] || {}).message || {}).content || '';
+          if (!text) throw new Error('OpenCode Zen returned empty response');
+          return text;
+        });
+      }
+    },
+    custom: {
+      label: 'Custom (OpenAI-compatible)',
+      models: [],
+      defaultModel: '',
+      needsBaseUrl: true,
+      keyPlaceholder: 'API key',
+      keyLink: null,
+      keyLinkText: null,
+      testUrl: function () { return null; },
+      testHeaders: function (key) { return { 'Authorization': 'Bearer ' + key }; },
+      call: function (cfg, systemPrompt, userPrompt, useJsonMode) {
+        var base = (cfg.baseUrl || '').replace(/\/+$/, '');
+        if (!base) throw new Error('Base URL required');
+        var body = {
+          model: cfg.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 8192
+        };
+        if (useJsonMode) body.response_format = { type: 'json_object' };
+        return fetch(base + '/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + cfg.apiKey
+          },
+          body: JSON.stringify(body)
+        }).then(function (r) {
+          if (!r.ok) return r.text().then(function (t) { throw new Error('Custom ' + r.status + ': ' + t.slice(0, 400)); });
           return r.json();
         }).then(function (data) {
           var text = (((data.choices || [])[0] || {}).message || {}).content || '';
@@ -254,6 +314,7 @@
     var keyInput = $('sgApiKey');
     var baseUrlInput = $('sgBaseUrl');
     var baseUrlGroup = $('sgBaseUrlGroup');
+    var keyLink = $('sgKeyLink');
 
     function populateModels() {
       var p = PROVIDERS[state.provider];
@@ -284,12 +345,24 @@
         node.value = state.model || p.defaultModel;
       }
       baseUrlGroup.style.display = p.needsBaseUrl ? '' : 'none';
+      // key placeholder + link
+      keyInput.placeholder = p.keyPlaceholder || 'API key';
+      if (keyLink) {
+        if (p.keyLink) {
+          keyLink.href = p.keyLink;
+          keyLink.textContent = p.keyLinkText || '';
+          keyLink.style.display = '';
+        } else {
+          keyLink.style.display = 'none';
+        }
+      }
     }
 
     function onProviderChange() {
       state.provider = sel.value;
       state.model = PROVIDERS[state.provider].defaultModel;
       populateModels();
+      setStatus('');
     }
 
     sel.addEventListener('change', onProviderChange);
@@ -309,6 +382,10 @@
     // save config on blur
     keyInput.addEventListener('blur', saveConfig);
     baseUrlInput.addEventListener('blur', saveConfig);
+
+    // test connection
+    var testBtn = $('sgTestBtn');
+    if (testBtn) testBtn.addEventListener('click', testConnection);
   }
 
   function saveConfig() {
@@ -330,6 +407,42 @@
     return { provider: p, cfg: cfg };
   }
 
+  /* ---------- Test connection ---------- */
+  function testConnection() {
+    var p = PROVIDERS[state.provider];
+    if (!state.apiKey) { setStatus('Enter your API key first.', false); return; }
+    if (p.needsBaseUrl && !state.baseUrl) { setStatus('Enter a base URL first.', false); return; }
+    setStatus('Testing connection…', null);
+    var url;
+    var headers = {};
+    if (state.provider === 'google') {
+      url = p.testUrl(state.apiKey);
+    } else if (state.provider === 'custom') {
+      var base = (state.baseUrl || '').replace(/\/+$/, '');
+      url = base + '/models';
+      headers = p.testHeaders(state.apiKey);
+    } else {
+      url = p.testUrl();
+      headers = p.testHeaders(state.apiKey);
+    }
+    fetch(url, { method: 'GET', headers: headers })
+      .then(function (r) {
+        if (!r.ok) return r.text().then(function (t) { throw new Error('HTTP ' + r.status + ': ' + t.slice(0, 200)); });
+        return r.json();
+      })
+      .then(function () {
+        saveConfig();
+        setStatus('Connected! Your key works. Ready to analyze ideas.', true);
+      })
+      .catch(function (err) {
+        var msg = err.message || 'Connection failed';
+        if (msg.indexOf('Failed to fetch') !== -1 || msg.indexOf('NetworkError') !== -1) {
+          msg = 'Could not reach the API. This may be a CORS restriction or network issue. For OpenCode Zen, ensure your key is from opencode.ai/auth.';
+        }
+        setStatus(msg, false);
+      });
+  }
+
   /* ---------- Example chips ---------- */
   function initExamples() {
     document.querySelectorAll('.sg-example-chip').forEach(function (chip) {
@@ -340,11 +453,18 @@
     });
   }
 
-  /* ---------- Call AI ---------- */
+  /* ---------- Call AI (with JSON-mode fallback) ---------- */
   function callAI(systemPrompt, userPrompt) {
     var setup = getConfig();
-    return setup.provider.call(setup.cfg, systemPrompt, userPrompt)
-      .then(function (text) { return extractJSON(text); });
+    function attempt(useJson) {
+      return setup.provider.call(setup.cfg, systemPrompt, userPrompt, useJson)
+        .then(function (text) { return extractJSON(text); });
+    }
+    // Try with JSON mode first; if it fails (e.g. model doesn't support
+    // response_format), retry without it — extractJSON parses raw text too.
+    return attempt(true).catch(function (err1) {
+      return attempt(false).catch(function () { throw err1; });
+    });
   }
 
   /* ---------- Step 1: Analyze idea ---------- */

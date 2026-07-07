@@ -2507,6 +2507,23 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
+.sg-provider-actions {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.sg-key-link {
+  display: inline-block;
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: var(--space-1);
+}
+
+.sg-key-link:hover {
+  text-decoration: underline;
+}
+
 .sg-privacy-note {
   font-size: var(--text-xs);
   color: var(--color-text-faint);

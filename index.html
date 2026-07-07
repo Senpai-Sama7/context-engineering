@@ -1177,12 +1177,14 @@
                 <select class="form-select" id="sgProvider">
                   <option value="google">Google Gemini</option>
                   <option value="openai">OpenAI</option>
-                  <option value="opencode">OpenCode / Custom (OpenAI-compatible)</option>
+                  <option value="opencode">OpenCode Zen</option>
+                  <option value="custom">Custom (OpenAI-compatible)</option>
                 </select>
               </div>
               <div class="form-group sg-field-key">
                 <label class="form-label" for="sgApiKey">API Key</label>
                 <input type="password" class="form-input" id="sgApiKey" placeholder="Paste your key" autocomplete="off">
+                <a href="#" id="sgKeyLink" class="sg-key-link" target="_blank" rel="noopener"></a>
               </div>
               <div class="form-group sg-field-model" id="sgModelGroup">
                 <label class="form-label" for="sgModel">Model</label>
@@ -1193,7 +1195,10 @@
                 <input type="text" class="form-input" id="sgBaseUrl" placeholder="https://api.your-endpoint.com/v1">
               </div>
             </div>
-            <p class="sg-privacy-note" id="sgPrivacyNote">Your key never leaves your browser. This is a static site with no backend.</p>
+            <div class="sg-provider-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="sgTestBtn">Test Connection</button>
+            </div>
+            <p class="sg-privacy-note" id="sgPrivacyNote">Your key never leaves your browser. This is a static site with no backend — calls go directly from your browser to the provider.</p>
             <p class="sg-status" id="sgConnectionStatus" aria-live="polite"></p>
           </div>
 
@@ -1220,7 +1225,7 @@
             <span class="sg-loading" id="sgAnalyzeLoading" style="display:none;">Analyzing…</span>
           </div>
 
-          <div class="section-divider" aria-hidden="true" style="margin:var(--space-8) 0;" id="sgDivAfterIdea" style="display:none;"></div>
+          <div class="section-divider" aria-hidden="true" id="sgDivAfterIdea" style="margin:var(--space-8) 0; display:none;"></div>
 
           <!-- STEP 2: DECISIONS -->
           <div class="sg-step reveal" id="sgStepDecisions" style="display:none;">
@@ -1235,7 +1240,7 @@
             <span class="sg-loading" id="sgGenerateLoading" style="display:none;">Building spec package…</span>
           </div>
 
-          <div class="section-divider" aria-hidden="true" style="margin:var(--space-8) 0;" id="sgDivAfterDecisions" style="display:none;"></div>
+          <div class="section-divider" aria-hidden="true" id="sgDivAfterDecisions" style="margin:var(--space-8) 0; display:none;"></div>
 
           <!-- STEP 3: OUTPUT -->
           <div class="sg-step reveal" id="sgStepOutput" style="display:none;">
