@@ -739,8 +739,8 @@
       see: ['context rot', 'attention dilution', 'ambiguity', 'context window']
     },
     'context rot': {
-      def: 'Instructions getting weaker over time as more conversation piles up. Like a game of telephone — the original message gets distorted the longer the chain goes. Earlier rules start getting ignored.',
-      see: ['distractor interference', 'attention dilution', 'context window']
+      def: 'Chroma\'s 2025 research term for the universal phenomenon that all frontier models degrade measurably as input length grows. Tested across 18 models — every one performs worse on simple tasks with longer inputs. Includes distractor interference (semantically similar irrelevant content hurts) and the shuffled haystack finding (reordering sometimes helps).',
+      see: ['distractor interference', 'shuffled haystack', 'attention dilution', 'lost in the middle', 'four core context engineering strategies']
     },
     'attention dilution': {
       def: 'When an AI\'s focus spreads too thin across too much text. Like trying to read 10 books at once — you don\'t deeply understand any of them. The more you give it, the less attention each piece gets.',
@@ -997,6 +997,70 @@
     'hill-climbing': {
       def: 'Same as hill climbing — the eval improvement loop of diagnose-by-theme, fix architecture, re-run.',
       see: ['hill climbing', 'regression eval', 'failure mode eval']
+    },
+    'shuffled haystack': {
+      def: 'A counterintuitive finding from Chroma\'s 2025 research: shuffling the order of context sometimes improves model performance. Suggests models rely on positional heuristics in addition to content relevance.',
+      see: ['context rot', 'injection ordering', 'lost in the middle']
+    },
+    'distractor interference': {
+      def: 'A failure mode where models perform worse when semantically similar but irrelevant content is present in context — the model confuses related-but-unrelated material. Documented in Chroma\'s 2025 study of 18 frontier models.',
+      see: ['context rot', 'attention dilution', 'ambiguity', 'context window']
+    },
+    'MCP': {
+      def: 'Model Context Protocol — Anthropic\'s open-source standard (Nov 2024) for wrapping external systems (GitHub, Slack, databases) as tools agents can call. 97M+ downloads by early 2026. Scope: agent-to-tool communication only — not agent-to-agent (A2A) or transactions (UCP).',
+      see: ['A2A', 'UCP', 'tools', 'just-in-time loading']
+    },
+    'Model Context Protocol': {
+      def: 'Same as MCP — Anthropic\'s 2024 open-source protocol for agent-to-tool communication. Now the de facto standard with 97M+ downloads.',
+      see: ['MCP', 'A2A', 'UCP']
+    },
+    'A2A': {
+      def: 'Agent-to-Agent protocol — handles delegation, peer messaging, and handoff between distinct agents. Different scope from MCP, which handles agent-to-tool only.',
+      see: ['MCP', 'UCP', 'sub-agent', 'multi-agent orchestration']
+    },
+    'UCP': {
+      def: 'Universal Commerce Protocol — handles payments, transactions, and commerce flows involving agents. Different scope from MCP (agent-to-tool) and A2A (agent-to-agent).',
+      see: ['MCP', 'A2A']
+    },
+    'PEEM': {
+      def: 'Prompt Engineering Evaluation Metrics — the 2026 nine-axis rubric for scoring prompts and outputs. Three structural axes (clarity, structure, fairness) checked pre-run; six output axes (accuracy, coherence, relevance, objectivity, clarity, conciseness) checked post-run.',
+      see: ['two-layer metric framework', 'hill climbing', 'regression eval']
+    },
+    'two-layer metric framework': {
+      def: 'A 2026 evaluation discipline: structural metrics (pre-run, zero token cost, catch design flaws) plus output metrics (post-run, judge model required, catch behavior issues). Catching structural issues pre-run saves compute.',
+      see: ['PEEM', 'hill climbing', 'regression eval']
+    },
+    'two-layer framework': {
+      def: 'Same as two-layer metric framework — structural (pre-run) + output (post-run).',
+      see: ['PEEM', 'two-layer metric framework']
+    },
+    'write': {
+      def: 'One of the four core context engineering strategies (write, select, compress, isolate). Write = persist state outside the context window to files, databases, or vector stores so it survives eviction.',
+      see: ['select', 'compress', 'isolate', 'context engineering']
+    },
+    'select': {
+      def: 'One of the four core context engineering strategies. Select = retrieve only the smallest relevant subset of available information, scored by semantic similarity. The opposite of dumping everything into context.',
+      see: ['write', 'compress', 'isolate', 'just-in-time loading', 'retrieval threshold']
+    },
+    'compress': {
+      def: 'One of the four core context engineering strategies. Compress = reduce long content to its semantic essence before injection. Replace transcripts with patterns, verbose instructions with concise rules, repeated information with pointers.',
+      see: ['write', 'select', 'isolate', 'memory compression']
+    },
+    'isolate': {
+      def: 'One of the four core context engineering strategies. Isolate = split work across sub-agents, each with a fresh, narrowly-scoped context window. Prevents cross-contamination and enables parallel work.',
+      see: ['write', 'select', 'compress', 'sub-agent', 'context isolation']
+    },
+    'four core context engineering strategies': {
+      def: 'The 2026 standard taxonomy: write (persist state outside the window), select (retrieve only relevant), compress (summarize/trim), isolate (sub-agents with scoped context). Every production system should explicitly choose which to apply.',
+      see: ['write', 'select', 'compress', 'isolate', 'context rot']
+    },
+    'ACE': {
+      def: 'Agentic Context Engineering — Stanford / SambaNova\'s 2025 framework. Generator produces output, Reflector evaluates against the success criterion, Curator updates the Playbook. Agents that iteratively refine their own context rather than relying on static prompts. Demonstrated 82% accuracy on complex QA, from a 61% baseline (arXiv:2510.04618).',
+      see: ['generator', 'reflector', 'curator', 'playbook', 'ACE framework']
+    },
+    'Agentic Context Engineering': {
+      def: 'Same as ACE — Stanford / SambaNova\'s 2025 framework where agents iteratively refine their own context. An advanced, emerging technique beyond static prompting.',
+      see: ['ACE', 'ACE framework']
     }
   };
 

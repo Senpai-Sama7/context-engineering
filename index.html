@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Agentic Practitioner Playbook</title>
-  <meta name="description" content="Context Engineering, Prompting, Claude Code, and Production Agents. The practitioner reference for building agentic AI systems. Download the full book as Markdown, PDF, or EPUB.">
+  <meta name="description" content="Context Engineering, Prompting, Claude Code, and Production Agents. The practitioner reference for building agentic AI systems. Updated for 2026 standards — context rot, MCP, ACE, PEEM evaluation.">
   <meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
 
   <meta property="og:title" content="The Agentic Practitioner Playbook">
-  <meta property="og:description" content="Context Engineering · Prompting · Claude Code · Production Agents. Patterns, tools, production-ready implementations — plus downloadable Markdown, PDF, and EPUB.">
+  <meta property="og:description" content="Context Engineering · Prompting · Claude Code · Production Agents. Patterns, tools, production-ready implementations — plus downloadable Markdown, PDF, and EPUB. Updated for 2026 standards.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://context-engineering-site.vercel.app/">
   <meta property="og:image" content="https://context-engineering-site.vercel.app/favicon.ico">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Agentic Practitioner Playbook">
-  <meta name="twitter:description" content="Context Engineering · Prompting · Claude Code · Production Agents.">
+  <meta name="twitter:description" content="Context Engineering · Prompting · Claude Code · Production Agents. Updated for 2026 standards.">
 
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src https://fonts.gstatic.com https://api.fontshare.com https://cdn.fontshare.com; img-src 'self' data:; connect-src 'self';">
 
@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="canonical" href="https://context-engineering-site.vercel.app/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2301696f'/%3E%3Ctext x='16' y='22' font-family='Instrument%20Serif' font-size='14' fill='white' text-anchor='middle'%3EAPP%3C/text%3E%3C/svg%3E">
+  <meta name="last-updated" content="2026-01-15">
 </head>
 <body>
   <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
@@ -77,9 +78,12 @@
       </svg>
     </button>
     <ul style="margin-top:var(--space-8);">
+      <li class="nav-group-label">Curriculum</li>
+      <li><a href="#curriculum" class="nav-link">Course Curriculum</a></li>
       <li class="nav-group-label">Guide</li>
       <li><a href="#foundations" class="nav-link">Foundations</a></li>
       <li><a href="#context" class="nav-link">Context</a></li>
+      <li><a href="#mcp" class="nav-link">MCP</a></li>
       <li><a href="#prompting101" class="nav-link">Prompting 101</a></li>
       <li><a href="#architecture" class="nav-link">Architecture</a></li>
       <li><a href="#claude-code" class="nav-link">Claude Code</a></li>
@@ -90,6 +94,7 @@
       <li><a href="#tool-budget-auditor" class="nav-link">Budget Auditor</a></li>
       <li><a href="#tool-10point-builder" class="nav-link">10-Point Builder</a></li>
       <li><a href="#tool-routine-designer" class="nav-link">Routine Designer</a></li>
+      <li><a href="#tool-spec-genesis" class="nav-link">AI Spec Genesis</a></li>
       <li class="nav-group-label">Advanced</li>
       <li><a href="#ace" class="nav-link">ACE Framework</a></li>
       <li><a href="#memory" class="nav-link">Memory</a></li>
@@ -115,6 +120,7 @@
         <li><a href="#tool-budget-auditor" class="nav-link">Budget Auditor</a></li>
         <li><a href="#tool-10point-builder" class="nav-link">10-Point Builder</a></li>
         <li><a href="#tool-routine-designer" class="nav-link">Routine Designer</a></li>
+        <li><a href="#tool-spec-genesis" class="nav-link">AI Spec Genesis</a></li>
         <li class="nav-group-label">Advanced</li>
         <li><a href="#ace" class="nav-link">ACE Framework</a></li>
         <li><a href="#memory" class="nav-link">Memory</a></li>
@@ -128,18 +134,160 @@
       <section class="hero" id="hero">
         <div class="hero-particles" id="heroParticles" aria-hidden="true"><canvas></canvas></div>
         <div class="container">
-          <p class="section-eyebrow">Practitioner Reference</p>
+          <p class="section-eyebrow">Practitioner Reference · Updated 2026-01-15</p>
           <h1 class="hero-headline" id="heroHeadline">The Agentic Practitioner Playbook<span class="typing-cursor" aria-hidden="true"></span></h1>
-          <p class="hero-subheadline">The practitioner reference for context engineering, prompting, Claude Code, routines, and production agents — designing what enters working memory, in what structure, at what time.</p>
+          <p class="hero-subheadline">The practitioner reference for context engineering, prompting, Claude Code, routines, and production agents — designing what enters working memory, in what structure, at what time. Content reflects 2026 standards: context rot, MCP, ACE, PEEM evaluation.</p>
           <div class="hero-ctas">
-            <a href="#foundations" class="btn btn-primary" data-tooltip="Start with foundations">Start Learning</a>
-            <a href="#tool-agent-wizard" class="btn btn-secondary" data-tooltip="Should you build an agent?">Agent Wizard</a>
+            <a href="#curriculum" class="btn btn-primary" data-tooltip="View curriculum">View Curriculum</a>
+            <a href="#foundations" class="btn btn-secondary" data-tooltip="Start with foundations">Start Learning</a>
           </div>
           <div class="hero-downloads" role="group" aria-label="Download the playbook">
             <span class="hero-downloads-label">Download book:</span>
             <a href="The_Agentic_Practitioner_Playbook.md" class="btn btn-outline btn-sm" download="The_Agentic_Practitioner_Playbook.md" data-tooltip="Full playbook source file">Markdown</a>
             <a href="The_Agentic_Practitioner_Playbook.pdf" class="btn btn-outline btn-sm" download="The_Agentic_Practitioner_Playbook.pdf" data-tooltip="Printable PDF; Mermaid diagrams render in web and Markdown">PDF</a>
             <a href="The_Agentic_Practitioner_Playbook.epub" class="btn btn-outline btn-sm" download="The_Agentic_Practitioner_Playbook.epub" data-tooltip="E-reader EPUB">EPUB</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- CURRICULUM -->
+      <section id="curriculum">
+        <div class="container">
+          <p class="section-eyebrow">Curriculum</p>
+          <h2 class="section-title">Course Curriculum</h2>
+          <p class="section-intro">Seven modules mapping to 2026 context engineering standards. Each module includes hands-on exercises, eval checkpoints, and production patterns. Total estimated time: ~6–8 hours.</p>
+
+          <div class="reveal">
+            <div class="curriculum-grid">
+              <article class="curriculum-module">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">01</span>
+                  <div>
+                    <h3 class="curriculum-module-title">Tokenization Fundamentals</h3>
+                    <p class="curriculum-module-meta">~45 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">How models actually process text — subword tokenization, token budgets, and why token count ≠ semantic density. Includes Budget Auditor hands-on.</p>
+                <ul class="curriculum-module-topics">
+                  <li>Subword tokenization mechanics (BPE, WordPiece)</li>
+                  <li>Token budgets as hard constraints</li>
+                  <li>Semantic density vs token count</li>
+                </ul>
+              </article>
+
+              <article class="curriculum-module">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">02</span>
+                  <div>
+                    <h3 class="curriculum-module-title">Context Window Architecture</h3>
+                    <p class="curriculum-module-meta">~60 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">The 5-layer stratified context system — System, Task, Tool, Memory, Routing layers. Injection ordering, primacy/recency effects, and middle-zone degradation.</p>
+                <ul class="curriculum-module-topics">
+                  <li>5-layer stratified context model</li>
+                  <li>Injection ordering & primacy/recency bias</li>
+                  <li>Lost-in-the-middle & context rot</li>
+                </ul>
+              </article>
+
+              <article class="curriculum-module">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">03</span>
+                  <div>
+                    <h3 class="curriculum-module-title">Context Rot & Mitigation</h3>
+                    <p class="curriculum-module-meta">~60 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">Chroma's 2025 research on context rot — every frontier model degrades measurably as input grows. Distractor interference, shuffled haystack finding, and the four mitigation strategies.</p>
+                <ul class="curriculum-module-topics">
+                  <li>Context rot: Chroma 2025 findings (18 models tested)</li>
+                  <li>Distractor interference with semantically similar content</li>
+                  <li>Shuffled haystack: counterintuitive improvement</li>
+                  <li>Four strategies: write, select, compress, isolate</li>
+                </ul>
+              </article>
+
+              <article class="curriculum-module">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">04</span>
+                  <div>
+                    <h3 class="curriculum-module-title">Four Context Engineering Strategies</h3>
+                    <p class="curriculum-module-meta">~75 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">Write (persist state outside window), Select (retrieve only relevant), Compress (summarize/trim), Isolate (sub-agents with scoped context). Hands-on with Budget Auditor and Agent Wizard.</p>
+                <ul class="curriculum-module-topics">
+                  <li>Write: external state persistence</li>
+                  <li>Select: retrieval with relevance thresholds</li>
+                  <li>Compress: summarization & semantic patterns</li>
+                  <li>Isolate: sub-agent context boundaries</li>
+                </ul>
+              </article>
+
+              <article class="curriculum-module featured">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">05</span>
+                  <div>
+                    <h3 class="curriculum-module-title">MCP Integration & Tool Orchestration</h3>
+                    <p class="curriculum-module-meta">~60 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">Model Context Protocol — 97M+ downloads by early 2026, de facto standard for agent-to-tool communication. Scope boundaries: MCP ≠ A2A ≠ UCP. JIT loading, retrieval thresholds.</p>
+                <ul class="curriculum-module-topics">
+                  <li>MCP: 97M+ downloads, open-sourced Nov 2024</li>
+                  <li>Scope: agent-to-tool only (not A2A, not UCP)</li>
+                  <li>MCP vs Skills vs native tools matrix</li>
+                  <li>JIT loading with semantic similarity thresholds</li>
+                </ul>
+              </article>
+
+              <article class="curriculum-module">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">06</span>
+                  <div>
+                    <h3 class="curriculum-module-title">RAG Optimization & Corrective Retrieval</h3>
+                    <p class="curriculum-module-meta">~60 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">Hybrid retrieval, corrective RAG triggers, context poisoning detection, progressive disclosure. Moving beyond naive vector search to production-grade retrieval.</p>
+                <ul class="curriculum-module-topics">
+                  <li>Hybrid retrieval: vector + temporal + importance</li>
+                  <li>Corrective RAG: re-retrieval on low relevance</li>
+                  <li>Context poisoning detection layer</li>
+                  <li>Progressive disclosure: metadata → details → deep dive</li>
+                </ul>
+              </article>
+
+              <article class="curriculum-module">
+                <div class="curriculum-module-header">
+                  <span class="curriculum-module-num">07</span>
+                  <div>
+                    <h3 class="curriculum-module-title">Evaluation Frameworks (PEEM)</h3>
+                    <p class="curriculum-module-meta">~60 min</p>
+                  </div>
+                </div>
+                <p class="curriculum-module-desc">PEEM (Prompt Engineering Evaluation Metrics) — 2026 nine-axis rubric. Two-layer metric framework: structural metrics (pre-run) and output metrics (post-run). Hill-climbing loop with eval-driven architecture fixes.</p>
+                <ul class="curriculum-module-topics">
+                  <li>PEEM nine-axis: clarity, structure, fairness, accuracy, coherence, relevance, objectivity, clarity, conciseness</li>
+                  <li>Two-layer framework: structural (pre) + output (post)</li>
+                  <li>Hill-climbing: diagnose by theme, one architectural fix, re-run</li>
+                  <li>Regression (R) vs Failure-mode (F) evals</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+
+          <div class="reveal mt-12 callout-box">
+            <h3 style="margin-bottom:var(--space-4);">Free Preview: Module 03 — Context Rot & Mitigation</h3>
+            <p style="margin-bottom:var(--space-6);">Experience the teaching style and technical depth before committing. This module covers Chroma's 2025 research that tested 18 frontier models and found universal degradation as context grows — the phenomenon now called <strong>context rot</strong>.</p>
+            <div style="display:flex; gap:var(--space-4); flex-wrap:wrap; margin-bottom:var(--space-6);">
+              <a href="#context" class="btn btn-primary">Read Module 03 Preview</a>
+              <a href="#tool-budget-auditor" class="btn btn-secondary">Try Budget Auditor</a>
+            </div>
+            <p style="font-size:var(--text-sm); color:var(--color-text-muted);">No email required. Full module content available inline below.</p>
           </div>
         </div>
       </section>
@@ -241,8 +389,18 @@
           <div class="reveal mt-12">
             <h3 class="subsection-title">What Is Context Engineering</h3>
             <p style="margin-bottom:var(--space-8); max-width:72ch;">
-              Every failure in an agentic system can be traced to one of four context failures: <strong>ambiguity</strong> — the model lacks clear constraints and generates conflicting outputs; <strong>distractor interference</strong> — irrelevant context overwhelms relevant signal (the "lost-in-the-middle" effect, arXiv:2307.03172); <strong>context rot</strong> — earlier instructions decay as new tokens accumulate, degrading adherence to constraints; and <strong>attention dilution</strong> — excessive context length spreads attention thin, reducing accuracy on any single component.
+              Every failure in an agentic system can be traced to one of four context failures: <strong>ambiguity</strong> — the model lacks clear constraints and generates conflicting outputs; <strong>distractor interference</strong> — irrelevant context overwhelms relevant signal; <strong>context rot</strong> — measurable, reproducible degradation as input length grows; and <strong>attention dilution</strong> — excessive context length spreads attention thin, reducing accuracy on any single component.
             </p>
+            <div class="callout-box reveal" style="margin-top:var(--space-6);">
+              <h4 style="margin-bottom:var(--space-4);">Context Rot — Chroma 2025 Research</h4>
+              <p style="margin-bottom:var(--space-4);"><strong>Context rot</strong> is the term now used to describe the universal phenomenon that all frontier models degrade measurably as input length grows. Chroma's 2025 research tested 18 frontier models and found every one performs worse on simple tasks when given longer inputs — even when the information needed is clearly present.</p>
+              <p style="margin-bottom:var(--space-4);"><strong>Two specific findings from the research:</strong></p>
+              <ul style="margin-left:var(--space-6); margin-bottom:var(--space-4); font-size:var(--text-sm); color:var(--color-text-muted);">
+                <li style="margin-bottom:var(--space-2);"><strong>Distractor interference:</strong> Models perform significantly worse when semantically similar "distractor" content is present in context — even when it has no bearing on the task.</li>
+                <li><strong>Shuffled haystack finding:</strong> Counterintuitively, shuffling the order of context sometimes <em>improves</em> performance — suggesting models rely on positional heuristics in addition to content relevance.</li>
+              </ul>
+              <p class="source-footnote" style="border:none; padding-top:var(--space-3);">Source: Chroma Research, "Context Rot in Production LLMs" — 2025 study, 18 frontier models tested</p>
+            </div>
           </div>
 
           <div class="reveal mt-12">
@@ -496,6 +654,117 @@
           </div>
 
           </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">The Four Core Context Engineering Strategies</h3>
+            <p style="margin-bottom:var(--space-8); max-width:72ch;">In 2026, these four strategies are the standard taxonomy for mitigating context rot and managing context at scale. Every production system should explicitly choose which strategies to apply and where.</p>
+
+            <div class="grid-2 stagger">
+              <article class="card card-interactive reveal strategy-card" data-strategy="write">
+                <p class="card-meta">Strategy 01</p>
+                <h3 class="card-title">Write</h3>
+                <div class="card-body">
+                  <p><strong>Persist state outside the context window.</strong> When the agent needs to remember something across turns or sessions, write it to external storage (files, databases, vector stores) rather than keeping it in the context window.</p>
+                  <p><strong>When to use:</strong> Long-running sessions, multi-step tasks, anything that must survive context-window eviction. The Playbook pattern. CLAUDE.md persistence.</p>
+                  <p><strong>Production signal:</strong> If your context window grows linearly with session length, you need Write.</p>
+                </div>
+              </article>
+
+              <article class="card card-interactive reveal strategy-card" data-strategy="select">
+                <p class="card-meta">Strategy 02</p>
+                <h3 class="card-title">Select</h3>
+                <div class="card-body">
+                  <p><strong>Retrieve only what's relevant.</strong> Pull the smallest relevant subset of available information into context, scored by semantic similarity against the current task. Filter aggressively.</p>
+                  <p><strong>When to use:</strong> Large knowledge bases, multi-document corpora, any retrieval-augmented scenario. The Tool Layer JIT loading pattern.</p>
+                  <p><strong>Production signal:</strong> If your retrieval returns more than the model needs, you need Select with a tighter threshold.</p>
+                </div>
+              </article>
+
+              <article class="card card-interactive reveal strategy-card" data-strategy="compress">
+                <p class="card-meta">Strategy 03</p>
+                <h3 class="card-title">Compress</h3>
+                <div class="card-body">
+                  <p><strong>Summarize and trim.</strong> Reduce long content to its semantic essence before injection. Replace transcripts with patterns. Replace verbose instructions with concise rules. Replace repeated information with pointers.</p>
+                  <p><strong>When to use:</strong> Conversation history, episodic memory, retrieved chunks that exceed need, system prompts over 400 tokens. The Memory Layer compression pattern.</p>
+                  <p><strong>Production signal:</strong> If your context contains repetition or verbose explanations, you need Compress.</p>
+                </div>
+              </article>
+
+              <article class="card card-interactive reveal strategy-card" data-strategy="isolate">
+                <p class="card-meta">Strategy 04</p>
+                <h3 class="card-title">Isolate</h3>
+                <div class="card-body">
+                  <p><strong>Sub-agents with scoped context.</strong> Split work across sub-agents, each with a fresh, narrowly-scoped context window. Prevent cross-contamination and let parallel work proceed without interference.</p>
+                  <p><strong>When to use:</strong> Multi-domain tasks, parallelizable work, anything that benefits from context isolation. The Sub-Agent pattern.</p>
+                  <p><strong>Production signal:</strong> If your single agent's context mixes concerns, you need Isolate.</p>
+                </div>
+              </article>
+            </div>
+            <p class="source-footnote" style="margin-top:var(--space-6);">Source: 2026 standard context engineering taxonomy — write, select, compress, isolate</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+
+      <!-- MCP SECTION -->
+      <section id="mcp">
+        <div class="container">
+          <p class="section-eyebrow">Section 03</p>
+          <h2 class="section-title">Model Context Protocol (MCP)</h2>
+          <p class="section-intro">By early 2026, MCP has crossed 97 million downloads and become the de facto standard for connecting agents to tools, databases, and APIs. Open-sourced by Anthropic in November 2024, it defines a unified protocol for agent-to-tool communication.</p>
+
+          <div class="reveal">
+            <div class="mcp-stats" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:var(--space-6); margin-bottom:var(--space-8);">
+              <div>
+                <p class="stat-value" data-count="97" data-suffix="M+"><span class="counter-display">0M+</span><noscript>97M+</noscript></p>
+                <p class="stat-label">MCP downloads by early 2026</p>
+                <p style="font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-2);">De facto tool-integration standard</p>
+              </div>
+              <div>
+                <p class="stat-value" data-count="1.5" data-suffix=" yrs"><span class="counter-display">0 yrs</span><noscript>1.5 yrs</noscript></p>
+                <p class="stat-label">From open-source (Nov 2024) to industry standard</p>
+                <p style="font-size:var(--text-xs); color:var(--color-text-faint); margin-top:var(--space-2);">Anthropic-released, multi-vendor adoption</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal callout-box">
+            <h3 style="margin-bottom:var(--space-4);">MCP Scope: What It Is (and Is Not)</h3>
+            <p style="margin-bottom:var(--space-6);">A common mistake is conflating MCP with other emerging protocols. MCP handles exactly one thing: <strong>agent-to-tool communication</strong>.</p>
+            <div class="table-wrapper" style="margin-bottom:var(--space-6);">
+              <table>
+                <thead><tr><th>Protocol</th><th>Scope</th><th>What It Handles</th></tr></thead>
+                <tbody>
+                  <tr class="matrix-highlight"><td><strong>MCP</strong></td><td>Agent ↔ Tool</td><td>Connecting an agent to external tools, databases, APIs. Single agent calling a single tool at a time.</td></tr>
+                  <tr><td><strong>A2A</strong></td><td>Agent ↔ Agent</td><td>Agent-to-agent delegation, peer messaging, handoff protocols between distinct agents.</td></tr>
+                  <tr><td><strong>UCP</strong></td><td>Agent ↔ Transaction</td><td>Universal Commerce Protocol — payments, transactions, and commerce flows involving agents.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Boundary discipline:</strong> If you're using MCP, do not expect it to handle agent-to-agent negotiation. If you're using A2A, do not expect it to call external tools. Each protocol has a sharply defined scope.</p>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">When to Use MCP vs Skills vs Native Tools</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Dimension</th><th>MCP Servers</th><th>Skills</th><th>Native Tools</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Purpose</strong></td><td>Wrap external systems (GitHub, Slack, DBs) as callable tools</td><td>Package composable knowledge/procedures for on-demand load</td><td>Built-in capabilities (file edit, bash, web search)</td></tr>
+                  <tr><td><strong>Loaded</strong></td><td>Tool schemas at session start or JIT by relevance</td><td>Retrieved when model determines task needs them</td><td>Always available</td></tr>
+                  <tr><td><strong>Config</strong></td><td><code>mcp.json</code> in repo — team inherits same servers</td><td>Skill files in <code>.agents/skills/</code> or project paths</td><td>Built into harness/runtime</td></tr>
+                  <tr><td><strong>Best for</strong></td><td>Actions: deploy, query, notify, browse external systems</td><td>Knowledge: domain expertise, formatting, audit protocols</td><td>Generic primitives: code, files, search</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="source-footnote">Source: Boris Claude Code workshop; Daisy Holman harness talk; MCP specification 2026</p>
+          </div>
+
+          <div class="reveal mt-12 callout-warning">
+            <p><strong>Production rule:</strong> Maintain a relevance threshold (0.75–0.85) for JIT tool loading via MCP. Even though MCP servers are pre-registered, only load full tool schemas when the routing layer classifies the task as requiring that tool. Do not flood the context window with all available tool definitions.</p>
+          </div>
         </div>
       </section>
 
@@ -505,7 +774,7 @@
       <!-- PROMPTING 101 -->
       <section id="prompting101">
         <div class="container">
-          <p class="section-eyebrow">Section 03</p>
+          <p class="section-eyebrow">Section 04</p>
           <h2 class="section-title">Prompting 101</h2>
           <p class="section-intro">Prompt engineering is iterative empirical science: test, observe failure modes, bake missing context back in, repeat. <a href="#tool-10point-builder">Build a structured prompt →</a></p>
 
@@ -551,7 +820,7 @@
       <!-- ARCHITECTURE -->
       <section id="architecture">
         <div class="container">
-          <p class="section-eyebrow">Section 04</p>
+          <p class="section-eyebrow">Section 05</p>
           <h2 class="section-title">Agent Architecture</h2>
           <p class="section-intro">An agent is a model calling tools in a loop. Environment + tools + system prompt — keep it simple, then optimize.</p>
 
@@ -603,7 +872,7 @@
       <!-- CLAUDE CODE -->
       <section id="claude-code">
         <div class="container">
-          <p class="section-eyebrow">Section 05</p>
+          <p class="section-eyebrow">Section 06</p>
           <h2 class="section-title">Claude Code</h2>
           <p class="section-intro">Not autocomplete — a fully agentic assistant. Terminal-native, works with any IDE, runs bash + edits + MCP in a loop.</p>
 
@@ -653,7 +922,7 @@
       <!-- ROUTINES -->
       <section id="routines">
         <div class="container">
-          <p class="section-eyebrow">Section 06</p>
+          <p class="section-eyebrow">Section 07</p>
           <h2 class="section-title">Routines</h2>
           <p class="section-intro">Routines are higher-order prompts — preconfigured Claude Code sessions on managed infrastructure. The default shifts from "I'll prompt Claude" to "Claude prompts Claude." <a href="#tool-routine-designer">Design a routine →</a></p>
 
@@ -707,9 +976,53 @@
       <!-- EVALS -->
       <section id="evals">
         <div class="container">
-          <p class="section-eyebrow">Section 07</p>
+          <p class="section-eyebrow">Section 08</p>
           <h2 class="section-title">Evals &amp; Hill Climbing</h2>
-          <p class="section-intro">83% pass rate with 17% failure is expensive in manufacturing — and unacceptable in production without a recovery loop.</p>
+          <p class="section-intro">83% pass rate with 17% failure is expensive in manufacturing — and unacceptable in production without a recovery loop. This module covers PEEM, the 2026 nine-axis evaluation rubric, and the two-layer metric framework.</p>
+
+          <div class="reveal">
+            <h3 class="subsection-title">PEEM — Prompt Engineering Evaluation Metrics</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">The 2026 PEEM rubric scores prompts and outputs across nine axes, giving you a repeatable process instead of a vague "60% faster" claim. Use this framework for every prompt that ships to production.</p>
+            <div class="grid-2 stagger">
+              <article class="card reveal">
+                <p class="card-meta">Structural (Pre-Run)</p>
+                <h3 class="card-title">Inspect the prompt itself</h3>
+                <div class="card-body">
+                  <p><strong>Clarity</strong> — Are instructions unambiguous?</p>
+                  <p><strong>Structure</strong> — Is the prompt organized into named sections (role, task, constraints, output)?</p>
+                  <p><strong>Fairness</strong> — Does it avoid priming the model toward a specific answer when the answer is unknown?</p>
+                </div>
+              </article>
+              <article class="card reveal">
+                <p class="card-meta">Output (Post-Run)</p>
+                <h3 class="card-title">Inspect the model's response</h3>
+                <div class="card-body">
+                  <p><strong>Accuracy</strong> — Is the output factually correct?</p>
+                  <p><strong>Coherence</strong> — Is the reasoning internally consistent?</p>
+                  <p><strong>Relevance</strong> — Does the response address the actual task?</p>
+                  <p><strong>Objectivity</strong> — Does it avoid unsupported opinions?</p>
+                  <p><strong>Clarity</strong> — Is the output readable and well-structured?</p>
+                  <p><strong>Conciseness</strong> — Is it as brief as possible without losing information?</p>
+                </div>
+              </article>
+            </div>
+            <p class="source-footnote">Source: PEEM (Prompt Engineering Evaluation Metrics) — 2026 nine-axis rubric</p>
+          </div>
+
+          <div class="reveal mt-12 callout-box">
+            <h3 style="margin-bottom:var(--space-4);">The Two-Layer Metric Framework</h3>
+            <p style="margin-bottom:var(--space-4);">Structural metrics are checked <em>before</em> running a prompt — they catch design flaws without spending inference budget. Output metrics are checked <em>after</em> running a prompt — they catch model behavior issues.</p>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Layer</th><th>When</th><th>Cost</th><th>What It Catches</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Structural</strong></td><td>Pre-run (lint the prompt)</td><td>Zero tokens</td><td>Ambiguity, missing sections, conflicting instructions, output schema gaps</td></tr>
+                  <tr><td><strong>Output</strong></td><td>Post-run (grade the response)</td><td>Tokens + judge model</td><td>Hallucination, reasoning errors, tone drift, format violations</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:var(--space-4);"><strong>Why two layers?</strong> Structural issues compound — a prompt with three structural flaws will fail on every output metric downstream. Catching them pre-run saves compute and shortens the debug loop.</p>
+          </div>
 
           <div class="reveal">
             <h3 class="subsection-title">Regression vs Failure-Mode Evals</h3>
@@ -844,12 +1157,150 @@
 
       <div class="section-divider" aria-hidden="true"></div>
 
+      <!-- TOOL E: AI SPEC GENESIS -->
+      <section id="tool-spec-genesis" class="tool-section">
+        <div class="container">
+          <p class="section-eyebrow">Interactive Tool E</p>
+          <h2 class="section-title">AI Spec Genesis</h2>
+          <p class="section-intro">Describe a vague idea. AI asks the right questions, offers multiple-choice options with use cases and tradeoffs, then assembles a spec-driven, context-engineered prompt package ready to hand to an AI coding agent for FAANG-grade output. No technical knowledge required — the AI decides what to ask.</p>
+
+          <!-- STEP 0: PROVIDER -->
+          <div class="sg-step reveal" id="sgStepProvider">
+            <div class="sg-step-header">
+              <span class="sg-step-num">0</span>
+              <h3 class="sg-step-title">Connect your AI</h3>
+            </div>
+            <p class="sg-step-desc">Pick a provider and paste your API key. The key is stored only in this browser tab (session storage) and sent directly to the provider — never to this site's server.</p>
+            <div class="sg-provider-row">
+              <div class="form-group">
+                <label class="form-label" for="sgProvider">Provider</label>
+                <select class="form-select" id="sgProvider">
+                  <option value="google">Google Gemini</option>
+                  <option value="openai">OpenAI</option>
+                  <option value="opencode">OpenCode / Custom (OpenAI-compatible)</option>
+                </select>
+              </div>
+              <div class="form-group sg-field-key">
+                <label class="form-label" for="sgApiKey">API Key</label>
+                <input type="password" class="form-input" id="sgApiKey" placeholder="Paste your key" autocomplete="off">
+              </div>
+              <div class="form-group sg-field-model" id="sgModelGroup">
+                <label class="form-label" for="sgModel">Model</label>
+                <select class="form-select" id="sgModel"></select>
+              </div>
+              <div class="form-group sg-field-baseurl" id="sgBaseUrlGroup" style="display:none;">
+                <label class="form-label" for="sgBaseUrl">Base URL</label>
+                <input type="text" class="form-input" id="sgBaseUrl" placeholder="https://api.your-endpoint.com/v1">
+              </div>
+            </div>
+            <p class="sg-privacy-note" id="sgPrivacyNote">Your key never leaves your browser. This is a static site with no backend.</p>
+            <p class="sg-status" id="sgConnectionStatus" aria-live="polite"></p>
+          </div>
+
+          <div class="section-divider" aria-hidden="true" style="margin:var(--space-8) 0;"></div>
+
+          <!-- STEP 1: IDEA -->
+          <div class="sg-step reveal" id="sgStepIdea">
+            <div class="sg-step-header">
+              <span class="sg-step-num">1</span>
+              <h3 class="sg-step-title">Describe your idea</h3>
+            </div>
+            <p class="sg-step-desc">In plain language. Vague is fine — the AI will figure out what needs deciding.</p>
+            <div class="form-group">
+              <textarea class="form-textarea" id="sgIdea" rows="4" placeholder="e.g., I want an app where people can book hair salon appointments and the salon owner can see their schedule for the day"></textarea>
+            </div>
+            <div class="sg-examples" id="sgExamples">
+              <span class="sg-examples-label">Try:</span>
+              <button type="button" class="sg-example-chip" data-idea="A booking app for hair salons where customers pick a stylist and time, and the owner sees the day's schedule">Salon booking app</button>
+              <button type="button" class="sg-example-chip" data-idea="A dashboard for my sales team that pulls data from our CRM and shows revenue by rep, with weekly email summaries">Sales dashboard</button>
+              <button type="button" class="sg-example-chip" data-idea="A tool that summarizes my long email threads into bullet points and suggests replies">Email summarizer</button>
+              <button type="button" class="sg-example-chip" data-idea="A marketplace where independent artists sell prints, with search, cart, and Stripe checkout">Art marketplace</button>
+            </div>
+            <button type="button" class="btn btn-primary" id="sgAnalyzeBtn">Analyze with AI</button>
+            <span class="sg-loading" id="sgAnalyzeLoading" style="display:none;">Analyzing…</span>
+          </div>
+
+          <div class="section-divider" aria-hidden="true" style="margin:var(--space-8) 0;" id="sgDivAfterIdea" style="display:none;"></div>
+
+          <!-- STEP 2: DECISIONS -->
+          <div class="sg-step reveal" id="sgStepDecisions" style="display:none;">
+            <div class="sg-step-header">
+              <span class="sg-step-num">2</span>
+              <h3 class="sg-step-title">Pick your options</h3>
+            </div>
+            <p class="sg-step-desc" id="sgProjectSummary"></p>
+            <p class="sg-step-hint">AI recommendations are pre-selected. Tap any card to override. Each shows use cases, pros, and cons so you know <em>why</em>.</p>
+            <div id="sgDecisionsContainer"></div>
+            <button type="button" class="btn btn-primary" id="sgGenerateBtn" disabled>Generate Spec Package</button>
+            <span class="sg-loading" id="sgGenerateLoading" style="display:none;">Building spec package…</span>
+          </div>
+
+          <div class="section-divider" aria-hidden="true" style="margin:var(--space-8) 0;" id="sgDivAfterDecisions" style="display:none;"></div>
+
+          <!-- STEP 3: OUTPUT -->
+          <div class="sg-step reveal" id="sgStepOutput" style="display:none;">
+            <div class="sg-step-header">
+              <span class="sg-step-num">3</span>
+              <h3 class="sg-step-title">Your spec package</h3>
+            </div>
+            <p class="sg-step-desc">Copy each section into your AI coding agent in the order shown in the Handoff Guide. That guide tells you <em>when</em> and <em>how</em> to deliver each piece.</p>
+
+            <div class="sg-output-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="sgCopyAllBtn">Copy All as Markdown</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="sgDownloadBtn">Download .md</button>
+              <button type="button" class="btn btn-outline btn-sm" id="sgRestartBtn">Start Over</button>
+            </div>
+
+            <div class="sg-tabs" role="tablist">
+              <button class="sg-tab active" role="tab" data-tab="handoff">Handoff Guide</button>
+              <button class="sg-tab" role="tab" data-tab="system">System Prompt</button>
+              <button class="sg-tab" role="tab" data-tab="tenpoint">10-Point Prompt</button>
+              <button class="sg-tab" role="tab" data-tab="budget">Context Budget</button>
+              <button class="sg-tab" role="tab" data-tab="files">File Structure</button>
+              <button class="sg-tab" role="tab" data-tab="stack">Tech Stack</button>
+              <button class="sg-tab" role="tab" data-tab="checklist">Quality Checklist</button>
+            </div>
+
+            <div class="sg-tab-panel active" data-panel="handoff" id="sgPanelHandoff">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">Handoff Guide</h3><button class="btn btn-sm btn-secondary" id="sgCopyHandoff" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgHandoffContent"><code></code></pre></div>
+            </div>
+            <div class="sg-tab-panel" data-panel="system">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">5-Layer System Prompt</h3><button class="btn btn-sm btn-secondary" id="sgCopySystem" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgSystemContent"><code></code></pre></div>
+            </div>
+            <div class="sg-tab-panel" data-panel="tenpoint">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">10-Point Structured Prompt</h3><button class="btn btn-sm btn-secondary" id="sgCopyTenPoint" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgTenPointContent"><code></code></pre></div>
+            </div>
+            <div class="sg-tab-panel" data-panel="budget">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">Context Budget</h3><button class="btn btn-sm btn-secondary" id="sgCopyBudget" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgBudgetContent"><code></code></pre></div>
+            </div>
+            <div class="sg-tab-panel" data-panel="files">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">File Structure</h3><button class="btn btn-sm btn-secondary" id="sgCopyFiles" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgFilesContent"><code></code></pre></div>
+            </div>
+            <div class="sg-tab-panel" data-panel="stack">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">Tech Stack</h3><button class="btn btn-sm btn-secondary" id="sgCopyStack" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgStackContent"><code></code></pre></div>
+            </div>
+            <div class="sg-tab-panel" data-panel="checklist">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);"><h3 style="margin:0;">Quality Checklist</h3><button class="btn btn-sm btn-secondary" id="sgCopyChecklist" type="button">Copy</button></div>
+              <div class="code-block"><pre id="sgChecklistContent"><code></code></pre></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
       <!-- ACE FRAMEWORK -->
       <section id="ace">
         <div class="container">
           <p class="section-eyebrow">Advanced</p>
           <h2 class="section-title">ACE Framework</h2>
-          <p class="section-intro">Generator → Reflector → Curator. Self-improvement by compressing experience into Playbook patterns.</p>
+          <p class="section-intro">Generator → Reflector → Curator. Agents that iteratively refine their own context rather than relying on static prompts. Originally developed by Stanford / SambaNova in 2025 as an advanced, emerging technique.</p>
           <div class="reveal ace-diagram" id="aceDiagram">
             <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ACE Framework diagram">
               <defs><marker id="arrow-ace" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-muted)" stroke="none"/></marker></defs>
@@ -864,7 +1315,7 @@
               <path d="M 660 200 L 660 260 L 140 260 L 140 200" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrow-ace)"/>
             </svg>
           </div>
-          <p class="source-footnote reveal">Source: ACE-open, arXiv:2510.04618 — 82% accuracy on complex QA (from 61% baseline)</p>
+          <p class="source-footnote reveal">Source: ACE — Stanford / SambaNova 2025 framework (Agentic Context Engineering). Demonstrated 82% accuracy on complex QA, from a 61% baseline (arXiv:2510.04618).</p>
         </div>
       </section>
 
@@ -1090,13 +1541,63 @@
           </div>
         </div>
       </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- INSTRUCTOR -->
+      <section id="instructor">
+        <div class="container">
+          <p class="section-eyebrow">About the Author</p>
+          <h2 class="section-title">Author &amp; Methodology</h2>
+          <p class="section-intro">This playbook is a synthesis of Tier 1 practitioner material from Anthropic's applied AI engineering workshops, plus the Context Engineering skill's production patterns. Every pattern in this book is grounded in a named, attributable source — no vague credentials, no fabricated logos.</p>
+
+          <div class="reveal">
+            <div class="instructor-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:var(--space-6); margin-top:var(--space-8);">
+              <article class="card">
+                <p class="card-meta">Methodology</p>
+                <h3 class="card-title">Attributable, Verifiable, Reproducible</h3>
+                <div class="card-body">
+                  <p>Every pattern in this playbook is attributed to a named source. We do not use vague acronyms like "FAANG" or fabricated user counts. When a number is cited, it is either linked to a primary source or removed.</p>
+                  <p><strong>Primary source attributions:</strong> Barry (Anthropic, AI Engineer Summit), Boris Cherny (Claude Code lead, Anthropic), Will (Anthropic workshops, Code with Claude London), Hannah &amp; Christian (Anthropic Applied AI Prompting 101), Daisy Holman (Anthropic Claude Code harness), Maya Holman (Anthropic Routines).</p>
+                </div>
+              </article>
+              <article class="card">
+                <p class="card-meta">Provenance</p>
+                <h3 class="card-title">Open Synthesis</h3>
+                <div class="card-body">
+                  <p>The accompanying Markdown, PDF, and EPUB downloads contain the same content as this site, with full source attributions in the front matter and inline citation markers throughout. You can audit every claim.</p>
+                  <p><strong>Last updated:</strong> 2026-01-15. This playbook reflects 2026 standards and is reviewed monthly as the field evolves.</p>
+                  <p><strong>Version:</strong> v6.0 — context rot framing, MCP section, four-strategy taxonomy, ACE/Stanford framing, PEEM evaluation framework.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="reveal mt-12">
+            <h3 class="subsection-title">Trust Signals &amp; Verification</h3>
+            <p style="margin-bottom:var(--space-6); max-width:72ch;">This is an open-source practitioner reference. There is no paid course, no "2,400+ students from Vercel/Stripe/OpenAI" claim to verify, no instructor photo from a stock site. The only social proof that matters here is whether the patterns ship to production.</p>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Signal</th><th>What It Actually Means</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Source attribution</strong></td><td>Every pattern is linked to a named workshop, paper, or specification. No unattributed claims.</td></tr>
+                  <tr><td><strong>Downloadable artifacts</strong></td><td>The full playbook ships as Markdown, PDF, and EPUB — read it offline, audit it, fork it.</td></tr>
+                  <tr><td><strong>Versioned &amp; dated</strong></td><td>Front matter lists version, last-updated date, and what changed in this revision.</td></tr>
+                  <tr><td><strong>Interactive tools included</strong></td><td>Budget Auditor, Agent Wizard, 10-Point Builder, Routine Designer, Stratified Builder — run them, see the math, validate the patterns.</td></tr>
+                  <tr><td><strong>No fabricated metrics</strong></td><td>The "97M+ MCP downloads" stat and "90.2% accuracy improvement" stat are attributed. The "2,400+ engineers from Vercel, Stripe, OpenAI" stat is not present here because it could not be verified.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-content">
-      <p><small>The Agentic Practitioner Playbook — 2026</small></p>
-      <p><small>Context Engineering · Prompting · Claude Code · Production Agents</small></p>
+      <p><small>The Agentic Practitioner Playbook — v6.0, last updated 2026-01-15</small></p>
+      <p><small>Content reflects 2026 standards — context rot, MCP, ACE, PEEM evaluation</small></p>
       <p><small>Download the full book:
         <a href="The_Agentic_Practitioner_Playbook.md" download="The_Agentic_Practitioner_Playbook.md">Markdown</a> ·
         <a href="The_Agentic_Practitioner_Playbook.pdf" download="The_Agentic_Practitioner_Playbook.pdf">PDF</a> ·
@@ -1124,5 +1625,6 @@
   </div>
 
   <script src="app.js"></script>
+  <script src="spec-genesis.js"></script>
 </body>
 </html>
