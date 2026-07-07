@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/zen/[...slug].js": {
+      "runtime": "@vercel/node@3"
+    }
+  }
+}

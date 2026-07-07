@@ -16,14 +16,17 @@ module.exports = async (req, res) => {
       headers['Authorization'] = req.headers.authorization;
     }
 
-    var body = await new Promise(function (resolve) {
-      var data = '';
-      req.on('data', function (chunk) { data += chunk; });
-      req.on('end', function () { resolve(data); });
-    });
+    var body = '';
+    if (req.method !== 'GET') {
+      body = await new Promise(function (resolve) {
+        var data = '';
+        req.on('data', function (chunk) { data += chunk; });
+        req.on('end', function () { resolve(data); });
+      });
+    }
 
     var fetchOpts = { method: req.method, headers: headers };
-    if (body && req.method !== 'GET') fetchOpts.body = body;
+    if (body) fetchOpts.body = body;
 
     var response = await fetch(targetUrl, fetchOpts);
     var responseText = await response.text();
