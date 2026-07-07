@@ -8,13 +8,8 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
-    var slug = (req.query.slug || []).join('/');
-    var targetUrl = ZEN_BASE + '/' + slug;
-
-    var headers = { 'Content-Type': 'application/json' };
-    if (req.headers.authorization) {
-      headers['Authorization'] = req.headers.authorization;
-    }
+    var path = req.query.path || '';
+    var targetUrl = ZEN_BASE + '/' + path;
 
     var body = '';
     if (req.method !== 'GET') {
@@ -25,13 +20,21 @@ module.exports = async (req, res) => {
       });
     }
 
-    var fetchOpts = { method: req.method, headers: headers };
+    var fetchOpts = {
+      method: req.method,
+      headers: { 'Content-Type': 'application/json' },
+    };
+    if (req.headers.authorization) {
+      fetchOpts.headers['Authorization'] = req.headers.authorization;
+    }
     if (body) fetchOpts.body = body;
 
-    var response = await fetch(targetUrl, fetchOpts);
-    var responseText = await response.text();
+    var upstream = await fetch(targetUrl, fetchOpts);
+    var upstreamText = await upstream.text();
+    var upstreamType = upstream.headers.get('content-type') || 'text/plain';
 
-    res.status(response.status).send(responseText);
+    res.setHeader('Content-Type', upstreamType);
+    res.status(upstream.status).send(upstreamText);
   } catch (err) {
     res.status(502).json({ error: 'Proxy error', message: err.message });
   }

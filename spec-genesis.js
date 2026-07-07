@@ -7,7 +7,7 @@
   'use strict';
 
   /* ---------- Provider registry ---------- */
-  var ZEN_BASE = '/api/zen';
+  var ZEN_BASE = '/api/proxy';
 
   var PROVIDERS = {
     google: {
@@ -116,7 +116,7 @@
       keyPlaceholder: 'ocz_…',
       keyLink: 'https://opencode.ai/auth',
       keyLinkText: 'Get an OpenCode Zen API key →',
-      testUrl: function () { return ZEN_BASE + '/models'; },
+      testUrl: function () { return ZEN_BASE + '?path=models'; },
       testHeaders: function (key) { return { 'Authorization': 'Bearer ' + key }; },
       call: function (cfg, systemPrompt, userPrompt, useJsonMode) {
         var body = {
@@ -129,7 +129,7 @@
           max_tokens: 8192
         };
         if (useJsonMode) body.response_format = { type: 'json_object' };
-        return fetch(ZEN_BASE + '/chat/completions', {
+        return fetch(ZEN_BASE + '?path=chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
