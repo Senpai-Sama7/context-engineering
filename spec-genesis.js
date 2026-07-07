@@ -7,7 +7,7 @@
   'use strict';
 
   /* ---------- Provider registry ---------- */
-  var ZEN_BASE = 'https://opencode.ai/zen/v1';
+  var ZEN_BASE = '/api/zen';
 
   var PROVIDERS = {
     google: {
@@ -91,7 +91,25 @@
     },
     opencode: {
       label: 'OpenCode Zen',
-      models: ['glm-5.2', 'deepseek-v4-flash', 'deepseek-v4-pro', 'kimi-k2.7-code', 'minimax-m3', 'big-pickle'],
+      models: [
+        'claude-sonnet-5', 'claude-sonnet-4-6', 'claude-sonnet-4-5', 'claude-sonnet-4',
+        'claude-haiku-4-5',
+        'claude-opus-4-8', 'claude-opus-4-7', 'claude-opus-4-6', 'claude-opus-4-5', 'claude-opus-4-1',
+        'claude-fable-5',
+        'deepseek-v4-pro', 'deepseek-v4-flash',
+        'gemini-3.5-flash', 'gemini-3.1-pro', 'gemini-3-flash',
+        'glm-5.2', 'glm-5.1', 'glm-5',
+        'gpt-5.5', 'gpt-5.5-pro', 'gpt-5.4', 'gpt-5.4-pro', 'gpt-5.4-mini', 'gpt-5.4-nano',
+        'gpt-5.3-codex-spark', 'gpt-5.3-codex',
+        'gpt-5.2', 'gpt-5.2-codex', 'gpt-5.1', 'gpt-5.1-codex-max', 'gpt-5.1-codex', 'gpt-5.1-codex-mini',
+        'gpt-5', 'gpt-5-codex', 'gpt-5-nano',
+        'grok-build-0.1',
+        'kimi-k2.7-code', 'kimi-k2.6', 'kimi-k2.5',
+        'minimax-m3', 'minimax-m2.7', 'minimax-m2.5',
+        'qwen3.6-plus', 'qwen3.5-plus',
+        'big-pickle',
+        'deepseek-v4-flash-free', 'hy3-free', 'mimo-v2.5-free', 'nemotron-3-ultra-free', 'north-mini-code-free'
+      ],
       defaultModel: 'glm-5.2',
       needsBaseUrl: false,
       hardcodedBase: ZEN_BASE,
@@ -437,7 +455,13 @@
       .catch(function (err) {
         var msg = err.message || 'Connection failed';
         if (msg.indexOf('Failed to fetch') !== -1 || msg.indexOf('NetworkError') !== -1) {
-          msg = 'Could not reach the API. This may be a CORS restriction or network issue. For OpenCode Zen, ensure your key is from opencode.ai/auth.';
+          var hints = {
+            google: 'Make sure your Google API key is correct and the Generative Language API is enabled in your GCP project.',
+            openai: 'Make sure your OpenAI API key is correct and your account has billing enabled.',
+            opencode: 'For OpenCode Zen, ensure your key is from opencode.ai/auth.',
+            custom: 'Make sure the base URL and API key are correct, and the server supports CORS.'
+          };
+          msg = 'Could not reach the API. This may be a CORS restriction or network issue.\n' + (hints[state.provider] || '');
         }
         setStatus(msg, false);
       });
